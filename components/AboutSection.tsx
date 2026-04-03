@@ -99,67 +99,70 @@ function StatItem({ value, suffix, label, triggered, duration = 1.8 }: StatProps
 const imageStackVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.14, delayChildren: 0.1 },
+    // About gets a slightly longer initial delay — 0.1s — distinct from other sections
+    transition: { staggerChildren: 0.13, delayChildren: 0.1 },
   },
 };
 
 const imageItemVariants: Variants = {
-  hidden: { opacity: 0, x: -48, filter: 'blur(8px)' },
+  hidden: { opacity: 0, x: -44, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     x: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.88, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const textContainerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+    // 0.17s delay — intentionally different from image stack (0.1)
+    transition: { staggerChildren: 0.115, delayChildren: 0.17 },
   },
 };
 
 const textItemVariants: Variants = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 22, filter: 'blur(6px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    // Slightly different duration from WhyVaels (0.8) and CampusExperience (0.75)
+    transition: { duration: 0.82, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const statsRowVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.09, delayChildren: 0.05 },
   },
 };
 
 const statItemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 14 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.58, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 // Variants for split headline (applied locally, not inside stagger chain)
 const headlineLineVariants: Variants = {
-  hidden: { opacity: 0, y: 18, filter: 'blur(5px)' },
+  hidden: { opacity: 0, y: 16, filter: 'blur(5px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.78, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.76, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const headlineContainerVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.115 } },
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -168,8 +171,8 @@ export default function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
-  const sectionInView = useInView(sectionRef, { once: true, margin: '-10% 0px' });
-  const statsInView = useInView(statsRef, { once: true, margin: '-5% 0px' });
+  const sectionInView = useInView(sectionRef, { once: true, margin: '-8% 0px' });
+  const statsInView = useInView(statsRef, { once: true, margin: '-4% 0px' });
 
   // ── Scroll-based parallax for image layers ──
   const { scrollYProgress } = useScroll({
@@ -202,7 +205,7 @@ export default function AboutSection() {
       ref={sectionRef}
       style={{
         background: '#F8F6F2',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(72px, 10vw, 132px) 0',
         overflow: 'hidden',
       }}
     >
@@ -288,6 +291,7 @@ export default function AboutSection() {
                 fill
                 quality={90}
                 className="object-cover"
+                style={{ objectPosition: 'center 22%' }}
                 sizes="(max-width: 768px) 90vw, 40vw"
               />
               {/* Subtle warm tint */}
@@ -326,6 +330,7 @@ export default function AboutSection() {
                 fill
                 quality={85}
                 className="object-cover"
+                style={{ objectPosition: 'center 30%' }}
                 sizes="(max-width: 768px) 55vw, 22vw"
               />
             </motion.div>

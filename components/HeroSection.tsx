@@ -6,6 +6,7 @@ import {
   Variants,
   useReducedMotion,
   useMotionValue,
+  useScroll,
   useSpring,
   useTransform,
 } from 'framer-motion';
@@ -144,29 +145,36 @@ function ScrollIndicator() {
 
 function PrimaryButton({ href, children }: { href: string; children: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
-  const [shinePos, setShinePos] = useState(-100);
+  const ref = useRef<HTMLDivElement>(null);
 
-  // Trigger shine sweep on hover entry
-  useEffect(() => {
-    if (hovered) {
-      setShinePos(-100);
-      const id = requestAnimationFrame(() => setShinePos(200));
-      return () => cancelAnimationFrame(id);
-    }
-  }, [hovered]);
+  // Magnetic pull
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 280, damping: 26, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 280, damping: 26, mass: 0.6 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left - r.width  / 2) * 0.22);
+    my.set((e.clientY - r.top  - r.height / 2) * 0.22);
+  };
+
+  const handleMouseLeave = () => { mx.set(0); my.set(0); setHovered(false); };
 
   return (
-    <motion.div variants={ctaItemVariants}>
+    <motion.div variants={ctaItemVariants} ref={ref}>
       <motion.div
+        style={{ x: sx, y: sy, display: 'inline-block' }}
         whileHover={{ scale: 1.045 }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 360, damping: 22 }}
-        style={{ display: 'inline-block' }}
       >
         <Link
           href={href}
           onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -188,8 +196,8 @@ function PrimaryButton({ href, children }: { href: string; children: React.React
             backdropFilter: 'blur(8px)',
             transition: 'background 0.38s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, color 0.3s ease',
             boxShadow: hovered
-              ? '0 0 32px rgba(212, 175, 55, 0.38), 0 8px 24px rgba(212, 175, 55, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
-              : '0 4px 24px rgba(26, 60, 110, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+              ? '0 0 32px rgba(212, 175, 55, 0.42), 0 8px 28px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255,255,255,0.15)'
+              : '0 4px 24px rgba(26, 60, 110, 0.32), inset 0 1px 0 rgba(255,255,255,0.06)',
           }}
         >
           {/* Shine sweep overlay */}
@@ -198,29 +206,20 @@ function PrimaryButton({ href, children }: { href: string; children: React.React
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             style={{
               position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '60px',
-              height: '100%',
-              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent)',
+              top: 0, left: 0,
+              width: '60px', height: '100%',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
               transform: 'skewX(-15deg)',
               pointerEvents: 'none',
             }}
           />
-
           <span style={{ position: 'relative', zIndex: 1, color: hovered ? '#0F2548' : '#F8F6F2' }}>
             {children}
           </span>
           <motion.span
             animate={{ x: hovered ? 5 : 0 }}
             transition={{ type: 'spring', stiffness: 450, damping: 22 }}
-            style={{
-              display: 'inline-block',
-              fontSize: '15px',
-              position: 'relative',
-              zIndex: 1,
-              color: hovered ? '#0F2548' : '#D4AF37',
-            }}
+            style={{ display: 'inline-block', fontSize: '15px', position: 'relative', zIndex: 1, color: hovered ? '#0F2548' : '#D4AF37' }}
           >
             →
           </motion.span>
@@ -234,19 +233,36 @@ function PrimaryButton({ href, children }: { href: string; children: React.React
 
 function SecondaryButton({ href, children }: { href: string; children: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Magnetic pull
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 280, damping: 26, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 280, damping: 26, mass: 0.6 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left - r.width  / 2) * 0.18);
+    my.set((e.clientY - r.top  - r.height / 2) * 0.18);
+  };
+
+  const handleMouseLeave = () => { mx.set(0); my.set(0); setHovered(false); };
 
   return (
-    <motion.div variants={ctaItemVariants}>
+    <motion.div variants={ctaItemVariants} ref={ref}>
       <motion.div
+        style={{ x: sx, y: sy, display: 'inline-block' }}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 360, damping: 24 }}
-        style={{ display: 'inline-block' }}
       >
         <Link
           href={href}
           onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -255,15 +271,15 @@ function SecondaryButton({ href, children }: { href: string; children: React.Rea
             fontSize: '13px',
             letterSpacing: '0.1em',
             fontWeight: 400,
-            color: hovered ? '#D4AF37' : 'rgba(248, 246, 242, 0.82)',
+            color: hovered ? '#D4AF37' : 'rgba(248, 246, 242, 0.85)',
             background: 'transparent',
-            border: `1.5px solid ${hovered ? 'rgba(212, 175, 55, 0.65)' : 'rgba(248, 246, 242, 0.25)'}`,
+            border: `1.5px solid ${hovered ? 'rgba(212, 175, 55, 0.65)' : 'rgba(248, 246, 242, 0.28)'}`,
             borderRadius: '100px',
             padding: '15px 32px',
             textDecoration: 'none',
             backdropFilter: 'blur(6px)',
-            transition:
-              'color 0.32s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.32s ease',
+            boxShadow: hovered ? '0 0 18px rgba(212, 175, 55, 0.15)' : 'none',
+            transition: 'color 0.32s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.32s ease, box-shadow 0.32s ease',
           }}
         >
           {children}
@@ -287,6 +303,17 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+
+  // ── Scroll-aware hero fade ─────────────────────────────────────────────
+  // As user scrolls 0→140px, hero text gently fades to 0.78 opacity
+  const { scrollY } = useScroll();
+  const heroTextOpacity = useTransform(
+    scrollY,
+    [0, 40, 140],
+    [1, 0.97, 0.78]
+  );
+  // Overlay intensifies very slightly (adds 0→0.12 extra darkness)
+  const overlayBoost = useTransform(scrollY, [0, 140], [0, 0.12]);
 
   // Cursor parallax — motion values
   const rawX = useMotionValue(0);
@@ -425,7 +452,27 @@ export default function HeroSection() {
         aria-hidden="true"
       />
 
-      {/* ── Layer 5: CSS Noise texture overlay ── */}
+      {/* ── Layer 5: Radial vignette corners ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(
+            ellipse 100% 100% at 50% 50%,
+            transparent 45%,
+            rgba(15, 37, 72, 0.38) 100%
+          )`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* ── Layer 6.5: Scroll-boosted overlay (deepens as user scrolls) ── */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'rgba(15,37,72,1)', opacity: overlayBoost }}
+        aria-hidden="true"
+      />
+
+      {/* ── Layer 6: CSS Noise texture overlay ── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -453,9 +500,9 @@ export default function HeroSection() {
         aria-hidden="true"
       />
 
-      {/* ── Content (cursor-parallax wrapper) ── */}
+      {/* ── Content (cursor-parallax + scroll-fade wrapper) ── */}
       <motion.div
-        style={{ x: contentX, y: contentY }}
+        style={{ x: contentX, y: contentY, opacity: heroTextOpacity }}
         className="absolute inset-0 flex flex-col pointer-events-none"
         aria-hidden="false"
       >
@@ -463,8 +510,8 @@ export default function HeroSection() {
         <div
           className="pointer-events-auto w-full flex flex-col justify-end flex-1"
           style={{
-            paddingTop: 'clamp(96px, 12vh, 140px)',
-            paddingBottom: 'clamp(80px, 11vh, 130px)',
+            paddingTop: 'clamp(80px, 12vh, 140px)',
+            paddingBottom: 'clamp(72px, 11vh, 130px)',
           }}
         >
           <div
@@ -515,6 +562,7 @@ export default function HeroSection() {
                   variants={headlineLine1Variants}
                   initial="hidden"
                   animate="visible"
+                  className="hero-headline"
                   style={{
                     display: 'block',
                     fontFamily: "'Cormorant Garamond', serif",
@@ -522,7 +570,7 @@ export default function HeroSection() {
                     fontWeight: 600,
                     color: '#F8F6F2',
                     lineHeight: 1.05,
-                    letterSpacing: '-0.01em',
+                    letterSpacing: '-0.012em',
                     textShadow:
                       '0 2px 24px rgba(15, 37, 72, 0.65), 0 1px 4px rgba(15, 37, 72, 0.45)',
                   }}
@@ -534,6 +582,7 @@ export default function HeroSection() {
                   variants={headlineLine2Variants}
                   initial="hidden"
                   animate="visible"
+                  className="hero-headline"
                   style={{
                     display: 'block',
                     fontFamily: "'Cormorant Garamond', serif",
@@ -541,7 +590,7 @@ export default function HeroSection() {
                     fontWeight: 600,
                     color: '#F8F6F2',
                     lineHeight: 1.05,
-                    letterSpacing: '-0.01em',
+                    letterSpacing: '-0.012em',
                     textShadow:
                       '0 2px 24px rgba(15, 37, 72, 0.65), 0 1px 4px rgba(15, 37, 72, 0.45)',
                   }}
@@ -553,6 +602,7 @@ export default function HeroSection() {
                   variants={headlineLine3Variants}
                   initial="hidden"
                   animate="visible"
+                  className="hero-headline"
                   style={{
                     display: 'block',
                     fontFamily: "'Cormorant Garamond', serif",
@@ -575,16 +625,18 @@ export default function HeroSection() {
                 variants={subtextVariants}
                 initial="hidden"
                 animate="visible"
+                className="hero-subtext"
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 'clamp(14px, 1.25vw, 18px)',
                   fontWeight: 300,
-                  color: 'rgba(248, 246, 242, 0.78)',
-                  marginTop: '24px',
+                  color: 'rgba(248, 246, 242, 0.8)',
+                  marginTop: '22px',
                   marginBottom: 0,
-                  letterSpacing: '0.03em',
-                  lineHeight: 1.55,
+                  letterSpacing: '0.025em',
+                  lineHeight: 1.6,
                   textShadow: '0 1px 8px rgba(15, 37, 72, 0.5)',
+                  maxWidth: '420px',
                 }}
               >
                 Three curricula. One purpose. Yours.
@@ -595,8 +647,8 @@ export default function HeroSection() {
                 variants={ctaContainerVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex flex-wrap items-center"
-                style={{ gap: '14px', marginTop: '36px' }}
+                className="flex flex-wrap items-center hero-cta-row"
+                style={{ gap: '14px', marginTop: '32px' }}
               >
                 <PrimaryButton href="#admissions">Enquire for Admission</PrimaryButton>
                 <SecondaryButton href="#admissions">Book a Campus Visit</SecondaryButton>

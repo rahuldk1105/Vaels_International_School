@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring, useTransform, Variants } from 'framer-motion';
 
 // ─── Pillar Icons (thin-line SVG paths) ───────────────────────────────────────
 
@@ -205,167 +205,182 @@ interface PillarCardProps {
 
 function PillarCard({ pillar, index, sectionInView }: PillarCardProps) {
   const [hovered, setHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   const { Icon } = pillar;
+
+  // Perspective tilt motion values
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const springCfg = { stiffness: 220, damping: 28, mass: 0.6 };
+  const rotateY = useSpring(useTransform(rawX, [-0.5, 0.5], [-5, 5]), springCfg);
+  const rotateX = useSpring(useTransform(rawY, [-0.5, 0.5], [4, -4]), springCfg);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) return;
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
+    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    rawX.set(0);
+    rawY.set(0);
+    setHovered(false);
   };
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 36, filter: 'blur(8px)' }}
-      animate={
-        sectionInView
-          ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-          : { opacity: 0, y: 36, filter: 'blur(8px)' }
-      }
-      transition={{
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-        delay: 0.3 + index * 0.12,
-      }}
-      whileHover={{ y: -6 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      onMouseMove={handleMouseMove}
-      style={{
-        background: '#ffffff',
-        borderRadius: '20px',
-        padding: 'clamp(28px, 3vw, 40px)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        cursor: 'default',
-        position: 'relative',
-        overflow: 'hidden',
-        boxShadow: hovered
-          ? '0 20px 60px rgba(26, 60, 110, 0.13), 0 4px 16px rgba(26, 60, 110, 0.07)'
-          : '0 4px 24px rgba(26, 60, 110, 0.06)',
-        transition: 'box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1)',
-      }}
-    >
-      {/* Gold top border accent */}
+    <div className="perspective-card" style={{ height: '100%' }}>
       <motion.div
-        animate={{
-          opacity: hovered ? 1 : 0.55,
-          scaleX: hovered ? 1 : 0.5,
+        ref={cardRef}
+        initial={{ opacity: 0, y: 36, filter: 'blur(8px)' }}
+        animate={
+          sectionInView
+            ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+            : { opacity: 0, y: 36, filter: 'blur(8px)' }
+        }
+        transition={{
+          duration: 0.85,
+          ease: [0.22, 1, 0.36, 1],
+          delay: 0.28 + index * 0.13,
         }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '3px',
-          background: 'linear-gradient(90deg, #D4AF37, rgba(212, 175, 55, 0.3))',
-          borderRadius: '0',
-          transformOrigin: 'left',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Cursor-tracked radial spotlight */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
+          rotateX,
+          rotateY,
+          transformStyle: 'preserve-3d',
+          background: '#ffffff',
           borderRadius: '20px',
-          background: hovered
-            ? `radial-gradient(circle 140px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.07) 0%, transparent 70%)`
-            : 'none',
-          pointerEvents: 'none',
-          zIndex: 0,
-          transition: 'background 0.1s linear',
+          padding: 'clamp(28px, 3vw, 40px)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          cursor: 'default',
+          position: 'relative',
+          overflow: 'hidden',
+          height: '100%',
+          boxShadow: hovered
+            ? '0 28px 72px rgba(26, 60, 110, 0.16), 0 6px 20px rgba(26, 60, 110, 0.08)'
+            : '0 4px 28px rgba(26, 60, 110, 0.07)',
+          transition: 'box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
-        aria-hidden="true"
-      />
-
-      {/* Subtle background wash on hover */}
-      <motion.div
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(145deg, rgba(230, 240, 255, 0.4) 0%, transparent 60%)',
-          borderRadius: '20px',
-          pointerEvents: 'none',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Icon */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <Icon animate={sectionInView} />
-      </div>
-
-      {/* Text content */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', position: 'relative', zIndex: 1 }}>
-        {/* Eyebrow */}
-        <span
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '10px',
-            letterSpacing: '0.22em',
-            fontWeight: 600,
-            color: '#D4AF37',
-            textTransform: 'uppercase',
+        whileHover={{ y: -7 }}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Gold top border accent */}
+        <motion.div
+          animate={{
+            opacity: hovered ? 1 : 0.55,
+            scaleX: hovered ? 1 : 0.45,
           }}
-        >
-          {pillar.eyebrow}
-        </span>
-
-        {/* Title */}
-        <h3
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(20px, 1.8vw, 26px)',
-            fontWeight: 600,
-            color: '#1A3C6E',
-            lineHeight: 1.15,
-            margin: 0,
-            letterSpacing: '-0.01em',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '3px',
+            background: 'linear-gradient(90deg, #D4AF37, rgba(212, 175, 55, 0.25))',
+            transformOrigin: 'left',
           }}
-        >
-          {pillar.title}
-        </h3>
+          aria-hidden="true"
+        />
 
-        {/* Description */}
-        <p
+        {/* Cursor-tracked radial spotlight */}
+        <motion.div
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
           style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 'clamp(13px, 1vw, 15px)',
-            fontWeight: 300,
-            color: 'rgba(26, 60, 110, 0.6)',
-            lineHeight: 1.72,
-            margin: 0,
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '20px',
+            background: 'radial-gradient(circle 160px at 50% 40%, rgba(212,175,55,0.065) 0%, transparent 70%)',
+            pointerEvents: 'none',
+            zIndex: 0,
           }}
-        >
-          {pillar.description}
-        </p>
-      </div>
+          aria-hidden="true"
+        />
 
-      {/* Hover: bottom gold line */}
-      <motion.div
-        animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: '28px',
-          right: '28px',
-          height: '1px',
-          background: 'rgba(212, 175, 55, 0.3)',
-          transformOrigin: 'left',
-        }}
-        aria-hidden="true"
-      />
-    </motion.div>
+        {/* Subtle blue wash on hover */}
+        <motion.div
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.4 }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(145deg, rgba(230, 240, 255, 0.45) 0%, transparent 65%)',
+            borderRadius: '20px',
+            pointerEvents: 'none',
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Icon */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <Icon animate={sectionInView} />
+        </div>
+
+        {/* Text content */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', position: 'relative', zIndex: 1 }}>
+          <span
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: '10px',
+              letterSpacing: '0.22em',
+              fontWeight: 600,
+              color: '#D4AF37',
+              textTransform: 'uppercase',
+            }}
+          >
+            {pillar.eyebrow}
+          </span>
+
+          <h3
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(20px, 1.8vw, 26px)',
+              fontWeight: 600,
+              color: '#1A3C6E',
+              lineHeight: 1.15,
+              margin: 0,
+              letterSpacing: '-0.01em',
+            }}
+          >
+            {pillar.title}
+          </h3>
+
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(13px, 1vw, 15px)',
+              fontWeight: 300,
+              color: 'rgba(26, 60, 110, 0.62)',
+              lineHeight: 1.75,
+              margin: 0,
+            }}
+          >
+            {pillar.description}
+          </p>
+        </div>
+
+        {/* Hover: bottom gold line */}
+        <motion.div
+          animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: '28px',
+            right: '28px',
+            height: '1px',
+            background: 'rgba(212, 175, 55, 0.32)',
+            transformOrigin: 'left',
+          }}
+          aria-hidden="true"
+        />
+      </motion.div>
+    </div>
   );
 }
 
@@ -397,10 +412,12 @@ export default function WhyVaelsSection() {
     <section
       id="why-vaels"
       ref={sectionRef}
+      className="section-ambient"
       style={{
-        background: 'linear-gradient(to bottom, #F8F6F2 0%, #F2F4F8 clamp(48px, 6vw, 88px), #F2F4F8 100%)',
+        background: 'linear-gradient(175deg, #F8F6F2 0%, #F2F4F8 30%, #EEF2FA 80%, #F2F4F8 100%)',
         padding: 'clamp(80px, 10vw, 140px) 0',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
       <div

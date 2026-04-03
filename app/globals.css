@@ -26,11 +26,17 @@
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
+  /* Native smooth scroll with momentum on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
   overflow-x: hidden;
   background-color: var(--ivory);
+  /* Prevent sub-pixel text rendering jitter */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── Selection Style ─────────────────────────────────────────────────────── */
@@ -40,22 +46,14 @@ body {
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--ivory);
-}
-
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ivory); }
 ::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.4);
+  background: rgba(212, 175, 55, 0.45);
   border-radius: 10px;
+  transition: background 0.2s ease;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.7);
-}
+::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.75); }
 
 /* ── Focus Visible ───────────────────────────────────────────────────────── */
 :focus-visible {
@@ -63,11 +61,180 @@ body {
   outline-offset: 3px;
 }
 
-/* ── Utility: Cormorant ──────────────────────────────────────────────────── */
-.font-cormorant {
-  font-family: var(--font-cormorant);
+/* ── Font utilities ──────────────────────────────────────────────────────── */
+.font-cormorant { font-family: var(--font-cormorant); }
+.font-dm-sans   { font-family: var(--font-dm-sans); }
+
+/* ── Gold Scroll Progress Bar ────────────────────────────────────────────── */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: var(--scroll-progress, 0%);
+  background: linear-gradient(90deg, #C9A227 0%, #F5E9B8 50%, #D4AF37 100%);
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow:
+    0 0 12px rgba(212, 175, 55, 0.7),
+    0 0 4px  rgba(212, 175, 55, 0.45);
+  transition: width 0.05s linear;
 }
 
-.font-dm-sans {
-  font-family: var(--font-dm-sans);
+/* ── Image blur-up on load ───────────────────────────────────────────────── */
+@keyframes blurUp {
+  from {
+    filter: blur(14px) saturate(0.5) brightness(0.94);
+    transform: scale(1.032);
+  }
+  to {
+    filter: blur(0px) saturate(1.08) brightness(1);
+    transform: scale(1);
+  }
+}
+
+.img-blurup {
+  animation: blurUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Subtle global image boost — contrast + saturation */
+section img,
+.img-enhanced {
+  filter: saturate(1.07) contrast(1.03);
+}
+
+/* ── Card perspective tilt ───────────────────────────────────────────────── */
+.perspective-card {
+  perspective: 1200px;
+}
+
+/* ── Ambient section top glow ────────────────────────────────────────────── */
+.section-ambient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: radial-gradient(
+    ellipse 70% 100% at 50% 0%,
+    rgba(212, 175, 55, 0.03) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Gold shimmer text ───────────────────────────────────────────────────── */
+@keyframes shimmerGold {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.shimmer-gold {
+  background: linear-gradient(
+    90deg,
+    #C9A227 0%,
+    #F5E9B8 38%,
+    #D4AF37 52%,
+    #C9A227 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerGold 4s linear infinite;
+}
+
+/* ── Thin gold section separator ─────────────────────────────────────────── */
+.section-sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+}
+
+/* ── Button magnetic pull ────────────────────────────────────────────────── */
+.btn-magnetic {
+  will-change: transform;
+}
+
+/* ── Hero scroll-fade: text dims as user scrolls ────────────────────────── */
+/* Driven via JS writing --hero-text-opacity to the hero container */
+.hero-content-fade {
+  opacity: var(--hero-text-opacity, 1);
+  transition: opacity 0.12s linear;
+}
+
+/* ── Mobile: prevent hero text overflow ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero-headline {
+    font-size: clamp(32px, 9vw, 52px) !important;
+    line-height: 1.06 !important;
+    letter-spacing: -0.005em !important;
+  }
+
+  .hero-subtext {
+    font-size: 14px !important;
+    line-height: 1.58 !important;
+  }
+
+  .hero-cta-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .hero-cta-row a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── Smooth section-entry stagger utilities ──────────────────────────────── */
+/* Used as fallback for sections without framer-motion */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-entry {
+  animation: fadeSlideUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Interactive element cursor scaling ─────────────────────────────────── */
+/* Cards and buttons get a subtle scale on hover via CSS as fallback */
+.interactive-hover {
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+.interactive-hover:hover {
+  transform: scale(1.025) translateY(-2px);
+}
+
+/* ── Ensure all images use correct object-fit/position ──────────────────── */
+.img-cover {
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ── No-motion overrides ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-progress-bar { display: none; }
+  .hero-content-fade   { opacity: 1 !important; }
 }

@@ -294,9 +294,10 @@ export default function GlobalOutcomesSection() {
       id="alumni"
       ref={sectionRef}
       style={{
-        background: 'linear-gradient(to bottom, #1A3C6E 0%, #F8F6F2 clamp(2px,0.5vw,4px), #F8F6F2 100%)',
+        background: 'linear-gradient(to bottom, #F8F6F2 0%, #EEF2FA 35%, #E8EFF9 65%, #F8F6F2 100%)',
         padding: 'clamp(80px, 10vw, 140px) 0',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
       <div className="mx-auto" style={{ maxWidth: '1280px', padding: '0 clamp(24px, 5vw, 80px)' }}>
@@ -315,13 +316,13 @@ export default function GlobalOutcomesSection() {
             animate={mapInView ? { opacity: 1, x: 0, filter: 'blur(0px)' } : {}}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              background: '#E6F0FF',
+              background: 'linear-gradient(145deg, #DDE8F8 0%, #E6F0FF 60%, #D8E6F8 100%)',
               borderRadius: '24px',
               padding: 'clamp(20px, 3vw, 32px)',
               aspectRatio: '2 / 1',
               minHeight: '280px',
-              boxShadow: '0 8px 48px rgba(26, 60, 110, 0.1)',
-              border: '1px solid rgba(26, 60, 110, 0.08)',
+              boxShadow: '0 12px 60px rgba(26, 60, 110, 0.14), 0 2px 12px rgba(26, 60, 110, 0.06), inset 0 1px 0 rgba(255,255,255,0.55)',
+              border: '1px solid rgba(26, 60, 110, 0.09)',
               position: 'relative',
               overflow: 'hidden',
             }}

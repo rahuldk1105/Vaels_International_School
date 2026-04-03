@@ -57,22 +57,25 @@ interface ProgrammeCardProps {
 
 function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-8% 0px' });
+  const inView = useInView(ref, { once: true, margin: '-7% 0px' });
   const fromLeft = !programme.imageRight;
 
+  // Each card gets a slightly different duration for non-uniform, human feel
+  const dur = [0.88, 0.92, 0.86][index] ?? 0.9;
+
   const textVariants: Variants = {
-    hidden: { opacity: 0, x: fromLeft ? 48 : -48, filter: 'blur(8px)' },
+    hidden: { opacity: 0, x: fromLeft ? 44 : -44, filter: 'blur(8px)' },
     visible: {
       opacity: 1, x: 0, filter: 'blur(0px)',
-      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 },
+      transition: { duration: dur, ease: [0.22, 1, 0.36, 1], delay: 0.12 },
     },
   };
 
   const imageVariants: Variants = {
-    hidden: { opacity: 0, x: fromLeft ? -48 : 48, filter: 'blur(8px)' },
+    hidden: { opacity: 0, x: fromLeft ? -44 : 44, filter: 'blur(8px)' },
     visible: {
       opacity: 1, x: 0, filter: 'blur(0px)',
-      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: dur, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -233,6 +236,7 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
           fill
           quality={88}
           className="object-cover"
+          style={{ objectPosition: programme.id === 'cambridge' ? 'center 20%' : programme.id === 'cisce' ? 'center 30%' : 'center 40%' }}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
         {/* Subtle colour grade */}
@@ -251,14 +255,16 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
 
 const headerVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+  // Academics: 0.12s delay — sits between About (0.1) and WhyVaels (0.18)
+  visible: { transition: { staggerChildren: 0.11, delayChildren: 0.12 } },
 };
 
 const headerItemVariants: Variants = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 18, filter: 'blur(6px)' },
   visible: {
     opacity: 1, y: 0, filter: 'blur(0px)',
-    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+    // Slightly longer than About (0.75) for a calmer academic feel
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
