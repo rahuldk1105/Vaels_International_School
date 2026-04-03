@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ───────────────────────────────────────────────── */
+:root {
+  --royal-blue: #1A3C6E;
+  --soft-gold: #D4AF37;
+  --ivory: #F8F6F2;
+  --sky-blue: #E6F0FF;
+  --deep-blue: #0F2548;
+  --gold-light: #F5E9B8;
+  --mist: #F2F4F8;
+
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+}
+
+/* ── Base Reset ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--ivory);
+}
+
+/* ── Selection Style ─────────────────────────────────────────────────────── */
+::selection {
+  background-color: rgba(212, 175, 55, 0.25);
+  color: var(--deep-blue);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.7);
+}
+
+/* ── Focus Visible ───────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--soft-gold);
+  outline-offset: 3px;
+}
+
+/* ── Utility: Cormorant ──────────────────────────────────────────────────── */
+.font-cormorant {
+  font-family: var(--font-cormorant);
+}
+
+.font-dm-sans {
+  font-family: var(--font-dm-sans);
+}
