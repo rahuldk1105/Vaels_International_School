@@ -60,11 +60,24 @@ interface ImageTileProps {
 function ImageTile({ tile, inView, index }: ImageTileProps) {
   const [hovered, setHovered] = useState(false);
 
+  // Non-uniform delays: each tile has a slightly different rhythm
+  const DELAYS = [0.08, 0.17, 0.11, 0.22, 0.14];
+  const delay = DELAYS[index] ?? 0.1 + index * 0.09;
+
+  // Per-tile object-position for better image focal framing
+  const FOCAL_POSITIONS: Record<string, string> = {
+    library: 'center 25%',
+    sports:  'center 30%',
+    labs:    'center 40%',
+    arts:    'center 35%',
+  };
+  const focalPos = FOCAL_POSITIONS[tile.gridArea] ?? 'center';
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.96, filter: 'blur(6px)' }}
+      initial={{ opacity: 0, scale: 0.97, filter: 'blur(6px)' }}
       animate={inView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.1 + index * 0.1 }}
+      transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1], delay }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       style={{
@@ -75,10 +88,10 @@ function ImageTile({ tile, inView, index }: ImageTileProps) {
         gridArea: tile.gridArea,
       }}
     >
-      {/* Image with zoom */}
+      {/* Image with subtle zoom */}
       <motion.div
-        animate={{ scale: hovered ? 1.05 : 1 }}
-        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ scale: hovered ? 1.04 : 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         style={{ position: 'absolute', inset: 0 }}
       >
         <Image
@@ -87,6 +100,7 @@ function ImageTile({ tile, inView, index }: ImageTileProps) {
           fill
           quality={85}
           className="object-cover"
+          style={{ objectPosition: focalPos }}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
         {/* Base gradient always present for legibility */}

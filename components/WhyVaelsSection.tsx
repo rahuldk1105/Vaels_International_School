@@ -388,16 +388,18 @@ function PillarCard({ pillar, index, sectionInView }: PillarCardProps) {
 
 const headerVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+  // WhyVaels: 0.18s — longest section entry delay, gives weight to this pivot section
+  visible: { transition: { staggerChildren: 0.105, delayChildren: 0.18 } },
 };
 
 const headerItemVariants: Variants = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 19, filter: 'blur(6px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+    // Duration sits between About (0.82) and campus (0.75)
+    transition: { duration: 0.78, ease: [0.22, 1, 0.36, 1] },
   },
 };
 

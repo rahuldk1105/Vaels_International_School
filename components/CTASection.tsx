@@ -1,7 +1,13 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useSpring,
+  Variants,
+} from 'framer-motion';
 import Link from 'next/link';
 
 // ─── Animated Geometric Background ───────────────────────────────────────────
@@ -95,108 +101,143 @@ function GeometricBackground() {
 
 function PrimaryCtaButton({ href, children }: { href: string; children: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 260, damping: 28, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 260, damping: 28, mass: 0.6 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left - r.width  / 2) * 0.2);
+    my.set((e.clientY - r.top  - r.height / 2) * 0.2);
+  };
+  const handleMouseLeave = () => { mx.set(0); my.set(0); setHovered(false); };
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: 'spring', stiffness: 360, damping: 22 }}
-      style={{ display: 'inline-block' }}
-    >
-      <Link
-        href={href}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '10px',
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: '13px',
-          letterSpacing: '0.1em',
-          fontWeight: 500,
-          color: hovered ? '#0F2548' : '#F8F6F2',
-          background: hovered
-            ? 'linear-gradient(135deg, #C9A227 0%, #E8CC6A 50%, #D4AF37 100%)'
-            : '#1A3C6E',
-          border: `1.5px solid ${hovered ? '#D4AF37' : 'rgba(212, 175, 55, 0.35)'}`,
-          borderRadius: '100px',
-          padding: '16px 36px',
-          textDecoration: 'none',
-          position: 'relative',
-          overflow: 'hidden',
-          transition: 'color 0.35s ease, background 0.35s ease, border-color 0.3s ease',
-          boxShadow: hovered
-            ? '0 0 36px rgba(212, 175, 55, 0.32), 0 8px 24px rgba(212, 175, 55, 0.16)'
-            : '0 4px 28px rgba(26, 60, 110, 0.18)',
-        }}
+    <motion.div ref={ref} style={{ display: 'inline-block' }}>
+      <motion.div
+        style={{ x: sx, y: sy, display: 'inline-block' }}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ type: 'spring', stiffness: 360, damping: 22 }}
       >
-        {/* Shine sweep */}
-        <motion.span
-          animate={{ x: hovered ? 260 : -80 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        <Link
+          href={href}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
           style={{
-            position: 'absolute',
-            top: 0, left: 0,
-            width: '60px', height: '100%',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent)',
-            transform: 'skewX(-15deg)',
-            pointerEvents: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '13px',
+            letterSpacing: '0.1em',
+            fontWeight: 500,
+            color: hovered ? '#0F2548' : '#F8F6F2',
+            background: hovered
+              ? 'linear-gradient(135deg, #C9A227 0%, #E8CC6A 50%, #D4AF37 100%)'
+              : '#1A3C6E',
+            border: `1.5px solid ${hovered ? '#D4AF37' : 'rgba(212, 175, 55, 0.35)'}`,
+            borderRadius: '100px',
+            padding: '16px 36px',
+            textDecoration: 'none',
+            position: 'relative',
+            overflow: 'hidden',
+            transition: 'color 0.35s ease, background 0.35s ease, border-color 0.3s ease',
+            boxShadow: hovered
+              ? '0 0 36px rgba(212, 175, 55, 0.32), 0 8px 24px rgba(212, 175, 55, 0.16)'
+              : '0 4px 28px rgba(26, 60, 110, 0.18)',
           }}
-        />
-        <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
-        <motion.span
-          animate={{ x: hovered ? 5 : 0 }}
-          transition={{ type: 'spring', stiffness: 450, damping: 22 }}
-          style={{ zIndex: 1, fontSize: '15px', display: 'inline-block' }}
         >
-          →
-        </motion.span>
-      </Link>
+          {/* Shine sweep */}
+          <motion.span
+            animate={{ x: hovered ? 260 : -80 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: 'absolute',
+              top: 0, left: 0,
+              width: '60px', height: '100%',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent)',
+              transform: 'skewX(-15deg)',
+              pointerEvents: 'none',
+            }}
+          />
+          <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+          <motion.span
+            animate={{ x: hovered ? 5 : 0 }}
+            transition={{ type: 'spring', stiffness: 450, damping: 22 }}
+            style={{ zIndex: 1, fontSize: '15px', display: 'inline-block' }}
+          >
+            →
+          </motion.span>
+        </Link>
+      </motion.div>
     </motion.div>
   );
 }
 
 function SecondaryCtaButton({ href, children }: { href: string; children: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 260, damping: 28, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 260, damping: 28, mass: 0.6 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left - r.width  / 2) * 0.16);
+    my.set((e.clientY - r.top  - r.height / 2) * 0.16);
+  };
+  const handleMouseLeave = () => { mx.set(0); my.set(0); setHovered(false); };
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: 'spring', stiffness: 360, damping: 24 }}
-      style={{ display: 'inline-block' }}
-    >
-      <Link
-        href={href}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: '13px',
-          letterSpacing: '0.1em',
-          fontWeight: 400,
-          color: hovered ? '#1A3C6E' : 'rgba(26, 60, 110, 0.72)',
-          background: 'transparent',
-          border: `1.5px solid ${hovered ? 'rgba(26, 60, 110, 0.5)' : 'rgba(26, 60, 110, 0.2)'}`,
-          borderRadius: '100px',
-          padding: '16px 36px',
-          textDecoration: 'none',
-          transition: 'color 0.3s ease, border-color 0.3s ease',
-        }}
+    <motion.div ref={ref} style={{ display: 'inline-block' }}>
+      <motion.div
+        style={{ x: sx, y: sy, display: 'inline-block' }}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ type: 'spring', stiffness: 360, damping: 24 }}
       >
-        {children}
-        <motion.span
-          animate={{ x: hovered ? 4 : 0 }}
-          transition={{ type: 'spring', stiffness: 430, damping: 22 }}
-          style={{ fontSize: '14px', display: 'inline-block' }}
+        <Link
+          href={href}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '13px',
+            letterSpacing: '0.1em',
+            fontWeight: 400,
+            color: hovered ? '#1A3C6E' : 'rgba(26, 60, 110, 0.72)',
+            background: 'transparent',
+            border: `1.5px solid ${hovered ? 'rgba(26, 60, 110, 0.5)' : 'rgba(26, 60, 110, 0.2)'}`,
+            borderRadius: '100px',
+            padding: '16px 36px',
+            textDecoration: 'none',
+            transition: 'color 0.3s ease, border-color 0.3s ease',
+            boxShadow: hovered ? '0 0 16px rgba(26,60,110,0.1)' : 'none',
+          }}
         >
-          →
-        </motion.span>
-      </Link>
+          {children}
+          <motion.span
+            animate={{ x: hovered ? 4 : 0 }}
+            transition={{ type: 'spring', stiffness: 430, damping: 22 }}
+            style={{ fontSize: '14px', display: 'inline-block' }}
+          >
+            →
+          </motion.span>
+        </Link>
+      </motion.div>
     </motion.div>
   );
 }
@@ -205,7 +246,8 @@ function SecondaryCtaButton({ href, children }: { href: string; children: React.
 
 const contentVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+  // CTA section: 0.14s — distinct from About (0.1), Academics (0.12), WhyVaels (0.18)
+  visible: { transition: { staggerChildren: 0.13, delayChildren: 0.14 } },
 };
 
 const contentItemVariants: Variants = {
@@ -312,10 +354,15 @@ export default function CTASection() {
             Connect with us to begin your child's journey at Vaels.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons — stacks vertically on mobile */}
           <motion.div
             variants={contentItemVariants}
-            style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '14px' }}
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '14px',
+            }}
           >
             <PrimaryCtaButton href="#admissions">Enquire Now</PrimaryCtaButton>
             <SecondaryCtaButton href="#campus">Book a Visit</SecondaryCtaButton>

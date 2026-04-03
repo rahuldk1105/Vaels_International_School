@@ -179,28 +179,29 @@ function MobileMenu({ open, onClose }: MobileMenuProps) {
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="absolute top-full left-0 right-0 border-b"
           style={{
-            background: 'rgba(248, 246, 242, 0.97)',
-            backdropFilter: 'blur(28px) saturate(180%)',
+            background: 'rgba(248, 246, 242, 0.98)',
+            backdropFilter: 'blur(32px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(32px) saturate(180%)',
             borderColor: 'rgba(212, 175, 55, 0.22)',
-            boxShadow: '0 12px 40px rgba(26, 60, 110, 0.1)',
+            boxShadow: '0 16px 48px rgba(26, 60, 110, 0.12)',
           }}
         >
-          <nav className="flex flex-col px-6 py-6 gap-1">
+          <nav className="flex flex-col px-6 py-5 gap-0">
             {NAV_LINKS.map((link, i) => (
               <motion.div
                 key={link.href}
-                initial={{ opacity: 0, x: -16 }}
+                initial={{ opacity: 0, x: -14 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
-                  delay: i * 0.055,
-                  duration: 0.38,
+                  delay: i * 0.05,
+                  duration: 0.36,
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
                 <Link
                   href={link.href}
                   onClick={onClose}
-                  className="block py-3 border-b"
+                  className="block border-b"
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: '14px',
@@ -210,6 +211,11 @@ function MobileMenu({ open, onClose }: MobileMenuProps) {
                     color: '#1A3C6E',
                     textDecoration: 'none',
                     borderColor: 'rgba(26, 60, 110, 0.07)',
+                    // Minimum 44px touch target height
+                    padding: '14px 0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    minHeight: '44px',
                     transition: 'color 0.2s ease',
                   }}
                 >
@@ -220,25 +226,31 @@ function MobileMenu({ open, onClose }: MobileMenuProps) {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.32 }}
-              className="pt-4"
+              transition={{ delay: 0.28 }}
+              className="pt-5 pb-1"
             >
               <Link
                 href="#admissions"
                 onClick={onClose}
-                className="block text-center py-3.5 rounded-full"
                 style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: '12px',
+                  fontSize: '12.5px',
                   letterSpacing: '0.1em',
                   fontWeight: 500,
                   background: 'linear-gradient(135deg, #D4AF37 0%, #F5E9B8 60%, #D4AF37 100%)',
                   color: '#0F2548',
                   textDecoration: 'none',
+                  borderRadius: '100px',
+                  // 48px min height for thumb-friendly CTA
+                  minHeight: '48px',
+                  padding: '0 28px',
                   boxShadow: '0 4px 20px rgba(212, 175, 55, 0.3)',
                 }}
               >
-                Enquire Now →
+                Enquire Now&nbsp;→
               </Link>
             </motion.div>
           </nav>
@@ -389,17 +401,33 @@ export default function Navbar() {
             <NavCTAButton scrolled={scrolled} />
           </motion.div>
 
-          {/* ── Mobile Hamburger ── */}
+          {/* ── Mobile Hamburger (44×44 touch target) ── */}
           <motion.button
             variants={ctaVariants}
-            className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10"
+            className="lg:hidden flex flex-col justify-center items-center"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              // Minimum 44×44px for WCAG touch target compliance
+              width: '44px',
+              height: '44px',
+              gap: '5px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              // Slightly larger hit area via padding
+              padding: '10px',
+              borderRadius: '8px',
+            }}
           >
             <motion.span
-              animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              animate={mobileOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 display: 'block',
                 width: '22px',
@@ -412,10 +440,10 @@ export default function Navbar() {
             />
             <motion.span
               animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
               style={{
                 display: 'block',
-                width: '16px',
+                width: '15px',
                 height: '1.5px',
                 background: scrolled ? '#1A3C6E' : '#F8F6F2',
                 borderRadius: '2px',
@@ -423,8 +451,8 @@ export default function Navbar() {
               }}
             />
             <motion.span
-              animate={mobileOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              animate={mobileOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 display: 'block',
                 width: '22px',
