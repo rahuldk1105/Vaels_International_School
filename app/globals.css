@@ -224,6 +224,121 @@ section img,
   object-position: center top;
 }
 
+/* ── Clip-path reveal (section headings) ─────────────────────────────────── */
+@keyframes clipRevealUp {
+  from {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0% 0 0 0);
+    opacity: 1;
+  }
+}
+
+.clip-reveal {
+  animation: clipRevealUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Floating ambient particles ──────────────────────────────────────────── */
+@keyframes floatParticle {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-120px) translateX(12px); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.6);
+  animation: floatParticle var(--dur, 5s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+}
+
+/* ── Grain texture overlay on body ──────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 99990;
+  mix-blend-mode: overlay;
+}
+
+/* ── Gradient shimmer on card borders ────────────────────────────────────── */
+@keyframes borderShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.border-shimmer {
+  background: linear-gradient(270deg, #C9A227, #F5E9B8, #D4AF37, #C9A227);
+  background-size: 300% 300%;
+  animation: borderShimmer 5s ease infinite;
+}
+
+/* ── Luxury text reveal (stagger per word) ───────────────────────────────── */
+@keyframes wordReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px) blur(4px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) blur(0);
+    filter: blur(0);
+  }
+}
+
+/* ── Glow pulse for gold accents ─────────────────────────────────────────── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.3); }
+  50%       { box-shadow: 0 0 22px rgba(212, 175, 55, 0.65), 0 0 8px rgba(212, 175, 55, 0.4); }
+}
+
+.glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* ── Horizontal floating animation ──────────────────────────────────────── */
+@keyframes floatH {
+  0%   { transform: translateX(0) translateY(0); }
+  33%  { transform: translateX(8px) translateY(-5px); }
+  66%  { transform: translateX(-4px) translateY(4px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+.float-gentle {
+  animation: floatH 8s ease-in-out infinite;
+}
+
+/* ── Section reveal wipe (left to right) ─────────────────────────────────── */
+@keyframes wipeReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+.wipe-reveal {
+  animation: wipeReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Luxury underline expand ─────────────────────────────────────────────── */
+@keyframes underlineExpand {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+.underline-expand {
+  animation: underlineExpand 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* ── No-motion overrides ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -237,4 +352,5 @@ section img,
 
   .scroll-progress-bar { display: none; }
   .hero-content-fade   { opacity: 1 !important; }
+  body::after          { display: none; }
 }

@@ -51,7 +51,7 @@ function GeometricBackground() {
           key={i}
           animate={{
             scale: [1, 1.12, 1],
-            opacity: [0.06, 0.02, 0.06],
+            opacity: [0.12, 0.04, 0.12],
           }}
           transition={{
             duration: 5,
@@ -67,7 +67,7 @@ function GeometricBackground() {
             width: `${60 + i * 20}%`,
             height: `${60 + i * 20}%`,
             borderRadius: '50%',
-            border: '1px solid rgba(26, 60, 110, 0.4)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
           }}
         />
       ))}
@@ -218,14 +218,14 @@ function SecondaryCtaButton({ href, children }: { href: string; children: React.
             fontSize: '13px',
             letterSpacing: '0.1em',
             fontWeight: 400,
-            color: hovered ? '#1A3C6E' : 'rgba(26, 60, 110, 0.72)',
+            color: hovered ? '#D4AF37' : 'rgba(248, 246, 242, 0.72)',
             background: 'transparent',
-            border: `1.5px solid ${hovered ? 'rgba(26, 60, 110, 0.5)' : 'rgba(26, 60, 110, 0.2)'}`,
+            border: `1.5px solid ${hovered ? 'rgba(212, 175, 55, 0.55)' : 'rgba(248, 246, 242, 0.22)'}`,
             borderRadius: '100px',
             padding: '16px 36px',
             textDecoration: 'none',
             transition: 'color 0.3s ease, border-color 0.3s ease',
-            boxShadow: hovered ? '0 0 16px rgba(26,60,110,0.1)' : 'none',
+            boxShadow: hovered ? '0 0 18px rgba(212,175,55,0.15)' : 'none',
           }}
         >
           {children}
@@ -267,8 +267,9 @@ export default function CTASection() {
   return (
     <section
       id="admissions"
+      data-dark-section="true"
       style={{
-        background: '#E6F0FF',
+        background: 'linear-gradient(160deg, #0F2548 0%, #1A3C6E 45%, #0F2548 100%)',
         padding: 'clamp(96px, 12vw, 168px) 0',
         overflow: 'hidden',
         position: 'relative',
@@ -332,14 +333,14 @@ export default function CTASection() {
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: 'clamp(40px, 5vw, 70px)',
             fontWeight: 600,
-            color: '#1A3C6E',
+            color: '#F8F6F2',
             lineHeight: 1.04,
             letterSpacing: '-0.015em',
             margin: '0 0 20px 0',
           }}>
             Admissions Open
             <br />
-            <span style={{ fontStyle: 'italic', color: '#0F2548' }}>for 2025–26.</span>
+            <span style={{ fontStyle: 'italic', color: '#D4AF37' }}>for 2025–26.</span>
           </motion.h2>
 
           {/* Subtext */}
@@ -347,7 +348,7 @@ export default function CTASection() {
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 'clamp(14px, 1.2vw, 17px)',
             fontWeight: 300,
-            color: 'rgba(26, 60, 110, 0.6)',
+            color: 'rgba(248, 246, 242, 0.55)',
             lineHeight: 1.7,
             margin: '0 0 44px 0',
           }}>
@@ -375,7 +376,7 @@ export default function CTASection() {
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '11px',
               letterSpacing: '0.08em',
-              color: 'rgba(26, 60, 110, 0.35)',
+              color: 'rgba(248, 246, 242, 0.25)',
               margin: '28px 0 0 0',
               lineHeight: 1.6,
             }}

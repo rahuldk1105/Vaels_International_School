@@ -64,6 +64,47 @@ const ctaItemVariants: Variants = {
   },
 };
 
+// ─── Floating Gold Particles ──────────────────────────────────────────────────
+
+const PARTICLES = [
+  { size: 2,   x: '12%',  y: '70%', dur: '7.2s', delay: '0s'   },
+  { size: 1.5, x: '28%',  y: '55%', dur: '9.8s', delay: '1.4s' },
+  { size: 3,   x: '18%',  y: '40%', dur: '6.5s', delay: '2.1s' },
+  { size: 1.5, x: '8%',   y: '82%', dur: '8.4s', delay: '0.7s' },
+  { size: 2.5, x: '35%',  y: '75%', dur: '7.9s', delay: '3.2s' },
+  { size: 1,   x: '22%',  y: '62%', dur: '11s',  delay: '0.3s' },
+  { size: 2,   x: '5%',   y: '50%', dur: '8.8s', delay: '4.1s' },
+  { size: 1.5, x: '42%',  y: '85%', dur: '6.9s', delay: '1.8s' },
+  { size: 3,   x: '15%',  y: '90%', dur: '9.2s', delay: '2.9s' },
+  { size: 1,   x: '32%',  y: '48%', dur: '10.5s', delay: '0.9s' },
+] as const;
+
+function FloatingParticles({ prefersReducedMotion }: { prefersReducedMotion: boolean | null }) {
+  if (prefersReducedMotion) return null;
+  return (
+    <div
+      aria-hidden="true"
+      style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}
+    >
+      {PARTICLES.map((p, i) => (
+        <div
+          key={i}
+          className="particle"
+          style={{
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            left: p.x,
+            bottom: p.y,
+            '--dur': p.dur,
+            '--delay': p.delay,
+            opacity: 0,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─── Scroll Indicator — Line + Travelling Dot ─────────────────────────────────
 
 function ScrollIndicator() {
@@ -484,6 +525,9 @@ export default function HeroSection() {
         }}
         aria-hidden="true"
       />
+
+      {/* ── Floating gold particles ── */}
+      <FloatingParticles prefersReducedMotion={prefersReducedMotion} />
 
       {/* ── Gold bottom rule ── */}
       <motion.div

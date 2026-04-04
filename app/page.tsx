@@ -8,13 +8,19 @@ import SocialProofSection from '@/components/SocialProofSection';
 import GlobalOutcomesSection from '@/components/GlobalOutcomesSection';
 import CTASection from '@/components/CTASection';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
+import LuxuryCursor from '@/components/LuxuryCursor';
+import PageLoadOverlay from '@/components/PageLoadOverlay';
+import MarqueeStrip from '@/components/MarqueeStrip';
 
 export default function Home() {
   return (
     <main>
+      <PageLoadOverlay />
+      <LuxuryCursor />
       <ScrollProgressBar />
       <Navbar />
       <HeroSection />
+      <MarqueeStrip />
       <div className="section-sep" />
       <AboutSection />
       <div className="section-sep" />
