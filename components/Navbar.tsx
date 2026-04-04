@@ -293,8 +293,9 @@ export default function Navbar() {
     <motion.header
       initial="hidden"
       animate="visible"
-      className="fixed top-0 left-0 right-0 z-50"
+      className="fixed left-0 right-0 z-50"
       style={{
+        top: 'var(--topbar-height, 40px)',
         background: scrolled
           ? 'rgba(248, 246, 242, 0.92)'
           : 'rgba(15, 37, 72, 0.55)',

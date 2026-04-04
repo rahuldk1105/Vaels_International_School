@@ -14,6 +14,9 @@
 
   --font-cormorant: 'Cormorant Garamond', serif;
   --font-dm-sans: 'DM Sans', sans-serif;
+
+  /* TopBar height — referenced by Navbar and HeroSection padding */
+  --topbar-height: 40px;
 }
 
 /* ── Base Reset ──────────────────────────────────────────────────────────── */

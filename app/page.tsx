@@ -11,6 +11,7 @@ import ScrollProgressBar from '@/components/ScrollProgressBar';
 import LuxuryCursor from '@/components/LuxuryCursor';
 import PageLoadOverlay from '@/components/PageLoadOverlay';
 import MarqueeStrip from '@/components/MarqueeStrip';
+import TopBar from '@/components/TopBar';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <PageLoadOverlay />
       <LuxuryCursor />
       <ScrollProgressBar />
+      <TopBar />
       <Navbar />
       <HeroSection />
       <MarqueeStrip />
