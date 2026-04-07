@@ -13,36 +13,6 @@ import imgLea from '../src/assets/Lea Rushton.webp';
 import imgRadhikaa from '../src/assets/Radhikaa.webp';
 import imgYoshinori from '../src/assets/Yoshinori.webp';
 
-// ─── Quote word-by-word highlight animation ───────────────────────────────────
-
-function AnimatedQuote({ text, inView }: { text: string; inView: boolean }) {
-  const words = text.split(' ');
-
-  return (
-    <span>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0.25, color: '#F8F6F2' }}
-          animate={
-            inView
-              ? { opacity: 1, color: i % 5 === 0 ? '#D4AF37' : '#F8F6F2' }
-              : { opacity: 0.25, color: '#F8F6F2' }
-          }
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.4 + i * 0.055 }}
-          style={{
-            display: 'inline',
-            fontFamily: "'Cormorant Garamond', serif",
-          }}
-        >
-          {word}
-          {i < words.length - 1 ? ' ' : ''}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
-
 // ─── Section Variants ─────────────────────────────────────────────────────────
 
 const spotlightVariants: Variants = {
@@ -61,6 +31,12 @@ const spotlightItemVariants: Variants = {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const SUPPORTING = [
+  {
+    name: 'Kamal Haasan',
+    title: 'Actor · Filmmaker · Cultural Icon · Vaels Parent',
+    quote: 'Vaels does not manufacture certificates. It manufactures conviction.',
+    image: imgKamal,
+  },
   {
     name: 'Gautham Vasudev Menon',
     title: 'Filmmaker · National Award Winner · Vaels Parent',
@@ -106,12 +82,10 @@ const SUPPORTING = [
 ];
 
 export default function SocialProofSection() {
-  const spotlightRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const spotlightInView = useInView(spotlightRef, { once: true, margin: '-8% 0px' });
-  const carouselInView = useInView(carouselRef, { once: true, margin: '-5% 0px' });
+  const headerInView = useInView(headerRef, { once: true, margin: '-8% 0px' });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -167,15 +141,15 @@ export default function SocialProofSection() {
       <div className="mx-auto" style={{ maxWidth: '1280px', padding: '0 clamp(24px, 5vw, 80px)' }}>
 
         <motion.div
-          ref={spotlightRef}
+          ref={headerRef}
           variants={spotlightVariants}
           initial="hidden"
-          animate={spotlightInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto', marginBottom: 'clamp(48px, 5vw, 64px)' }}
+          animate={headerInView ? 'visible' : 'hidden'}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           <motion.div
             variants={spotlightItemVariants}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '32px' }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '20px' }}
           >
             <div style={{ width: '32px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.6))' }} />
             <span style={{
@@ -191,95 +165,24 @@ export default function SocialProofSection() {
             <div style={{ width: '32px', height: '1px', background: 'linear-gradient(90deg, rgba(212,175,55,0.6), transparent)' }} />
           </motion.div>
 
-          <motion.div
+          <motion.h2
             variants={spotlightItemVariants}
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(72px, 9vw, 120px)',
-              lineHeight: 0.7,
-              color: 'rgba(212, 175, 55, 0.18)',
-              marginBottom: '24px',
-              userSelect: 'none',
-            }}
-            aria-hidden="true"
-          >
-            "
-          </motion.div>
-
-          <motion.p
-            variants={spotlightItemVariants}
-            style={{
-              fontSize: 'clamp(22px, 3vw, 40px)',
-              lineHeight: 1.3,
+              fontSize: 'clamp(38px, 4.5vw, 62px)',
+              fontWeight: 600,
+              color: '#F8F6F2',
+              lineHeight: 1.06,
               letterSpacing: '-0.01em',
-              margin: '0 0 36px 0',
+              margin: 0,
             }}
           >
-            <AnimatedQuote
-              text="Vaels does not manufacture certificates. It manufactures conviction."
-              inView={spotlightInView}
-            />
-          </motion.p>
-
-          <motion.div
-            variants={spotlightItemVariants}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}
-          >
-            <div style={{
-              width: '56px',
-              height: '56px',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              border: '2px solid rgba(212, 175, 55, 0.5)',
-              position: 'relative',
-              flexShrink: 0,
-              background: 'rgba(212, 175, 55, 0.08)',
-            }}>
-              <Image
-                src={imgKamal}
-                alt="Kamal Haasan"
-                fill
-                className="object-cover"
-                sizes="56px"
-              />
-            </div>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '15px',
-                fontWeight: 600,
-                color: '#D4AF37',
-                letterSpacing: '0.04em',
-              }}>
-                Kamal Haasan
-              </div>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '11px',
-                fontWeight: 300,
-                color: 'rgba(248, 246, 242, 0.4)',
-                letterSpacing: '0.08em',
-              }}>
-                Actor · Filmmaker · Cultural Icon · Vaels Parent
-              </div>
-            </div>
-          </motion.div>
+            What People{' '}
+            <span style={{ fontStyle: 'italic', color: '#D4AF37' }}>Are Saying</span>
+          </motion.h2>
         </motion.div>
 
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={spotlightInView ? { scaleX: 1, opacity: 1 } : {}}
-          transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
-          style={{
-            height: '1px',
-            background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent)',
-            marginBottom: 'clamp(48px, 5vw, 64px)',
-            transformOrigin: 'center',
-          }}
-          aria-hidden="true"
-        />
-
-        <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(350px, 45vw, 450px)' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', paddingTop: 'clamp(32px, 4vw, 48px)', paddingBottom: 'clamp(32px, 4vw, 48px)' }}>
           <button
             onClick={goToPrev}
             style={{
@@ -348,9 +251,10 @@ export default function SocialProofSection() {
                   alignItems: 'center',
                   textAlign: 'center',
                   padding: '0 clamp(64px, 8vw, 96px)',
+                  gap: '16px',
                 }}
               >
-                <div style={{ display: 'flex', gap: '6px', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', gap: '6px' }}>
                   {Array.from({ length: 5 }).map((_, j) => (
                     <span
                       key={j}
@@ -379,8 +283,7 @@ export default function SocialProofSection() {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '16px',
-                  marginTop: '32px',
+                  gap: '12px',
                 }}>
                   <div style={{
                     width: '56px',
@@ -425,7 +328,7 @@ export default function SocialProofSection() {
           justifyContent: 'center',
           alignItems: 'center',
           gap: '8px',
-          marginTop: '32px',
+          marginTop: '16px',
         }}>
           {SUPPORTING.map((_, i) => (
             <button
