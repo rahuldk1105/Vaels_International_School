@@ -279,19 +279,7 @@ export default function SocialProofSection() {
           aria-hidden="true"
         />
 
-        <motion.div
-          ref={carouselRef}
-          initial={{ opacity: 0 }}
-          animate={carouselInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          style={{
-            position: 'relative',
-            overflow: 'hidden',
-            minHeight: 'clamp(350px, 45vw, 450px)',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
+        <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(350px, 45vw, 450px)' }}>
           <button
             onClick={goToPrev}
             style={{
@@ -302,15 +290,13 @@ export default function SocialProofSection() {
               width: '44px',
               height: '44px',
               borderRadius: '50%',
-              border: '1.5px solid rgba(212, 175, 55, 0.3)',
-              background: 'rgba(248, 246, 242, 0.1)',
-              backdropFilter: 'blur(8px)',
+              border: '1.5px solid rgba(212, 175, 55, 0.4)',
+              background: 'rgba(15, 37, 72, 0.6)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
               zIndex: 10,
-              transition: 'all 0.3s ease',
               color: '#D4AF37',
               fontSize: '20px',
             }}
@@ -329,15 +315,13 @@ export default function SocialProofSection() {
               width: '44px',
               height: '44px',
               borderRadius: '50%',
-              border: '1.5px solid rgba(212, 175, 55, 0.3)',
-              background: 'rgba(248, 246, 242, 0.1)',
-              backdropFilter: 'blur(8px)',
+              border: '1.5px solid rgba(212, 175, 55, 0.4)',
+              background: 'rgba(15, 37, 72, 0.6)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
               zIndex: 10,
-              transition: 'all 0.3s ease',
               color: '#D4AF37',
               fontSize: '20px',
             }}
@@ -348,11 +332,12 @@ export default function SocialProofSection() {
 
           <div style={{
             display: 'flex',
-            transition: 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
-            transform: `translateX(-${currentIndex * 100}%)`,
             width: '100%',
+            willChange: 'transform',
+            transform: `translateX(-${currentIndex * 100}%)`,
+            transition: 'transform 380ms ease-out',
           }}>
-            {SUPPORTING.map((t, i) => (
+            {SUPPORTING.map((t) => (
               <div
                 key={t.name}
                 style={{
@@ -362,9 +347,7 @@ export default function SocialProofSection() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   textAlign: 'center',
-                  maxWidth: '840px',
-                  margin: '0 auto',
-                  padding: '0 clamp(24px, 4vw, 64px)',
+                  padding: '0 clamp(64px, 8vw, 96px)',
                 }}
               >
                 <div style={{ display: 'flex', gap: '6px', marginBottom: '24px' }}>
@@ -386,7 +369,8 @@ export default function SocialProofSection() {
                   fontWeight: 400,
                   color: 'rgba(248, 246, 242, 0.88)',
                   lineHeight: 1.5,
-                  margin: '0 0 32px 0',
+                  margin: 0,
+                  maxWidth: '840px',
                 }}>
                   "{t.quote}"
                 </p>
@@ -396,7 +380,7 @@ export default function SocialProofSection() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '16px',
-                  marginTop: '24px',
+                  marginTop: '32px',
                 }}>
                   <div style={{
                     width: '56px',
@@ -434,7 +418,7 @@ export default function SocialProofSection() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         <div style={{
           display: 'flex',
