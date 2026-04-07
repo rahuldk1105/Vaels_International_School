@@ -158,40 +158,142 @@ function IconHolistic({ animate }: { animate: boolean }) {
   );
 }
 
+function IconShield({ animate }: { animate: boolean }) {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      {/* Shield outline */}
+      <motion.path
+        d="M16 4 L27 8 L27 17 C27 23 16 28 16 28 C16 28 5 23 5 17 L5 8 Z"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none" strokeLinecap="round" strokeLinejoin="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      />
+      {/* Check mark inside */}
+      <motion.path
+        d="M11 16 L14.5 19.5 L21 13"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none" strokeLinecap="round" strokeLinejoin="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}
+      />
+    </svg>
+  );
+}
+
+function IconCommunity({ animate }: { animate: boolean }) {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      {/* Centre person head */}
+      <motion.circle
+        cx="16" cy="10" r="3"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+      />
+      {/* Centre person body */}
+      <motion.path
+        d="M11 22 C11 18 21 18 21 22"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none" strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.22 }}
+      />
+      {/* Left person head */}
+      <motion.circle
+        cx="8" cy="12" r="2.5"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+      />
+      {/* Left person shoulder arc */}
+      <motion.path
+        d="M4 24 C4 20 13 20 13 24"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none" strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+      />
+      {/* Right person head */}
+      <motion.circle
+        cx="24" cy="12" r="2.5"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+      />
+      {/* Right person shoulder arc */}
+      <motion.path
+        d="M19 24 C19 20 28 20 28 24"
+        stroke="#D4AF37" strokeWidth="1.5"
+        fill="none" strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={animate ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+      />
+    </svg>
+  );
+}
+
 // ─── Pillar Data ──────────────────────────────────────────────────────────────
 
 const PILLARS = [
   {
-    id: 'global',
-    title: 'A Passport for the Mind',
-    eyebrow: 'Global Exposure',
+    id: 'academic-excellence',
+    title: 'Academic Excellence',
+    eyebrow: 'Curriculum',
     description:
-      'Exchange programmes, international accreditations, and a campus culture where the world is the default reference point — not the exception.',
-    Icon: IconGlobe,
-  },
-  {
-    id: 'leadership',
-    title: 'Leaders, Not Just Toppers',
-    eyebrow: 'Leadership Development',
-    description:
-      'Our students run councils, launch ventures, represent nations. We build the instinct to lead before the title arrives.',
-    Icon: IconLeadership,
-  },
-  {
-    id: 'academic',
-    title: 'Rigour Without Rigidity',
-    eyebrow: 'Academic Excellence',
-    description:
-      'Three globally recognised curricula. Each demanding. Each deliberate. Each preparing a different kind of mind for a different kind of stage.',
+      'We adhere to international teaching standards and incorporate best practices from around the world.',
     Icon: IconAcademic,
   },
   {
-    id: 'holistic',
-    title: 'The Whole Person',
-    eyebrow: 'Holistic Growth',
+    id: 'world-class-faculty',
+    title: 'World-Class Faculty',
+    eyebrow: 'Teaching Staff',
     description:
-      'Sport. Art. Music. Service. Because the universities — and the world — are done being impressed by just grades.',
+      'Our faculty members are highly qualified and bring a wealth of experience to the classroom.',
+    Icon: IconLeadership,
+  },
+  {
+    id: 'state-of-the-art-facilities',
+    title: 'State-Of-The-Art Facilities',
+    eyebrow: 'Infrastructure',
+    description:
+      'Our classrooms are equipped with the latest educational technology, to facilitate interactive learning.',
+    Icon: IconGlobe,
+  },
+  {
+    id: 'extracurricular-excellence',
+    title: 'Extracurricular Excellence',
+    eyebrow: 'Beyond Academics',
+    description:
+      "We're committed to providing every student with opportunities to explore their passions in sports, arts, and other creative pursuits.",
     Icon: IconHolistic,
+  },
+  {
+    id: 'safe-environment',
+    title: 'Safe And Supportive Environment',
+    eyebrow: 'Student Safety',
+    description:
+      'Our campus is monitored by 24/7 security, to ensure a secure learning environment.',
+    Icon: IconShield,
+  },
+  {
+    id: 'community-values',
+    title: 'Community And Values',
+    eyebrow: 'Core Values',
+    description:
+      'We nurture students to become thoughtful, responsible global citizens.',
+    Icon: IconCommunity,
   },
 ] as const;
 
@@ -468,7 +570,7 @@ export default function WhyVaelsSection() {
                 textTransform: 'uppercase',
               }}
             >
-              The Vaels Difference
+              Why Choose Us
             </span>
             <div
               style={{
@@ -493,10 +595,9 @@ export default function WhyVaelsSection() {
               maxWidth: '560px',
             }}
           >
-            Not what we teach.
-            <br />
+            Why{' '}
             <span style={{ fontStyle: 'italic', color: '#0F2548' }}>
-              What they become.
+              VAELS?
             </span>
           </motion.h2>
         </motion.div>
@@ -505,7 +606,7 @@ export default function WhyVaelsSection() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
             gap: 'clamp(16px, 2vw, 24px)',
           }}
         >

@@ -1,11 +1,12 @@
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
+import OurFacilitiesSection from '@/components/OurFacilitiesSection';
 import WhyVaelsSection from '@/components/WhyVaelsSection';
 import AcademicExcellenceSection from '@/components/AcademicExcellenceSection';
-import CampusExperienceSection from '@/components/CampusExperienceSection';
-import SocialProofSection from '@/components/SocialProofSection';
-import GlobalOutcomesSection from '@/components/GlobalOutcomesSection';
+import OurAcademicsSection from '@/components/OurAcademicsSection';
+import OurAlumniSection from '@/components/OurAlumniSection';
+import StudentsLifeSection from '@/components/StudentsLifeSection';
 import CTASection from '@/components/CTASection';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
 import LuxuryCursor from '@/components/LuxuryCursor';
@@ -26,13 +27,17 @@ export default function Home() {
       <div className="section-sep" />
       <AboutSection />
       <div className="section-sep" />
+      <OurFacilitiesSection />
+      <div className="section-sep" />
       <WhyVaelsSection />
       <div className="section-sep" />
       <AcademicExcellenceSection />
       <div className="section-sep" />
-      <CampusExperienceSection />
-      <SocialProofSection />
-      <GlobalOutcomesSection />
+      <OurAcademicsSection />
+      <div className="section-sep" />
+      <OurAlumniSection />
+      <div className="section-sep" />
+      <StudentsLifeSection />
       <CTASection />
     </main>
   );
