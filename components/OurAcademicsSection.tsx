@@ -31,12 +31,12 @@ const CAMPUSES = [
     textOnBg: '#1A3C6E',
     imageRight: false,
     images: [
-      '/images/inajambakam -1.webp',
-      '/images/inajambakam -2.webp',
-      '/images/inajambakam -3.webp',
-      '/images/inajambakam -4.webp',
-      '/images/inajambakam -5.webp',
-      '/images/inajambakam -6.webp',
+      '/images/inajambakam-1.webp',
+      '/images/inajambakam-2.webp',
+      '/images/inajambakam-3.webp',
+      '/images/inajambakam-4.webp',
+      '/images/inajambakam-5.webp',
+      '/images/inajambakam-6.webp',
     ],
   },
 ] as const;
@@ -60,7 +60,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
   };
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', aspectRatio: '16/10' }}>
+    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', aspectRatio: '16/10', background: '#f0f0f0' }}>
       {/* Image Track */}
       <div style={{
         display: 'flex',
@@ -79,6 +79,9 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
               height: '100%',
               flexShrink: 0,
               objectFit: 'cover',
+            }}
+            onError={(e) => {
+              console.error(`Failed to load image: ${img}`);
             }}
           />
         ))}
