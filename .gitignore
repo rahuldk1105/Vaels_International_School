@@ -61,3 +61,7 @@ coverage/
 .vercel
 .turbo
 *.pem
+-e 
+# Environment files
+*.env
+*.env.*
