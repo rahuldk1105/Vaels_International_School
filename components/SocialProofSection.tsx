@@ -2,7 +2,16 @@
 
 import { useRef } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
+
+import imgKamal from '../src/assets/Kamal Hasan.webp';
+import imgGVM from '../src/assets/GVM.webp';
+import imgSrikanth from '../src/assets/Srikanth.webp';
+import imgTareen from '../src/assets/A.K. Tareen.webp';
+import imgJiva from '../src/assets/Jiva.webp';
+import imgLea from '../src/assets/Lea Rushton.webp';
+import imgRadhikaa from '../src/assets/Radhikaa.webp';
+import imgYoshinori from '../src/assets/Yoshinori.webp';
 
 // ─── Quote word-by-word highlight animation ───────────────────────────────────
 
@@ -40,7 +49,7 @@ interface TestimonialCardProps {
   name: string;
   title: string;
   quote: string;
-  image: string;
+  image: string | StaticImageData;
   inView: boolean;
   index: number;
 }
@@ -155,19 +164,43 @@ const SUPPORTING = [
     name: 'Gautham Vasudev Menon',
     title: 'Filmmaker · National Award Winner · Vaels Parent',
     quote: 'The environment here does what parenting alone cannot — it gives children a reason to be excellent.',
-    image: '/images/testimonial-gautham.jpg',
+    image: imgGVM,
   },
   {
     name: 'Krish Srikanth',
     title: 'Former Indian Cricket Captain · Vaels Supporter',
     quote: "I've watched young athletes from this campus walk into national trials. Vaels builds competitors, not just students.",
-    image: '/images/testimonial-krish.jpg',
+    image: imgSrikanth,
   },
   {
     name: 'Aisha Nair',
     title: 'Vaels Alumna · UCL Class of 2024',
     quote: 'Cambridge interview. Oxford offer. Both started in a classroom here. Vaels never let me aim below my ceiling.',
-    image: '/images/testimonial-alumni.jpg',
+    image: imgLea,
+  },
+  {
+    name: 'Radhikaa Sarathkumar',
+    title: 'Actress & Producer · Vaels Parent',
+    quote: 'A school that nurtures creativity and discipline equally, creating well-rounded individuals ready for the world.',
+    image: imgRadhikaa,
+  },
+  {
+    name: 'Jiiva',
+    title: 'Actor · Vaels Supporter',
+    quote: 'The passion for sports and arts here is unmatched. It truly builds strong character and resilience.',
+    image: imgJiva,
+  },
+  {
+    name: 'Nawab A.K. Tareen',
+    title: 'Former Diplomat',
+    quote: 'An international standard of education right here in Chennai, shaping future leaders.',
+    image: imgTareen,
+  },
+  {
+    name: 'Yoshinori',
+    title: 'International Dignitary',
+    quote: 'Vaels bridges cultures, preparing students to be true global citizens with a broad perspective.',
+    image: imgYoshinori,
   },
 ];
 
@@ -289,7 +322,7 @@ export default function SocialProofSection() {
               background: 'rgba(212, 175, 55, 0.08)',
             }}>
               <Image
-                src="/images/testimonial-kamal.jpg"
+                src={imgKamal}
                 alt="Kamal Haasan"
                 fill
                 className="object-cover"

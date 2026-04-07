@@ -33,43 +33,41 @@ function useCountUp(target: number, duration: number, triggered: boolean): { val
 }
 
 // ─── World Map SVG ────────────────────────────────────────────────────────────
-// Simplified continent paths — 800×400 viewBox
+// Simplified but recognizable continent paths — 800×400 viewBox
 
 const CONTINENTS = [
-  // North America
-  { id: 'na', d: 'M 65 55 L 90 45 L 130 48 L 158 60 L 175 75 L 185 100 L 195 130 L 185 155 L 170 170 L 150 175 L 125 168 L 105 152 L 85 130 L 70 108 L 60 82 Z' },
+  // North America (Canada, USA, Mexico, Greenland)
+  { id: 'na', d: 'M 85 45 L 120 35 L 165 38 L 200 55 L 225 85 L 235 120 L 220 155 L 195 175 L 165 180 L 140 170 L 115 150 L 95 120 L 80 90 L 75 65 Z M 200 25 L 240 20 L 265 35 L 255 60 L 230 55 L 210 45 Z' },
   // South America
-  { id: 'sa', d: 'M 148 185 L 175 180 L 196 195 L 205 222 L 204 262 L 194 295 L 178 320 L 160 330 L 148 314 L 140 285 L 137 248 L 140 215 Z' },
-  // Europe
-  { id: 'eu', d: 'M 342 58 L 390 53 L 416 64 L 426 82 L 415 100 L 388 108 L 363 106 L 347 90 L 340 72 Z' },
+  { id: 'sa', d: 'M 185 195 L 210 190 L 235 205 L 245 235 L 242 275 L 230 315 L 210 345 L 190 355 L 175 335 L 168 300 L 165 260 L 170 225 Z' },
+  // Europe (including UK)
+  { id: 'eu', d: 'M 355 52 L 395 48 L 430 52 L 455 65 L 465 85 L 450 105 L 420 115 L 385 112 L 360 95 L 345 75 L 340 60 Z M 335 58 L 348 54 L 352 68 L 342 72 Z' },
   // Africa
-  { id: 'af', d: 'M 344 118 L 394 112 L 425 122 L 441 150 L 445 188 L 440 232 L 420 268 L 394 288 L 364 284 L 341 258 L 332 224 L 332 178 L 338 145 Z' },
-  // Middle East peninsula
-  { id: 'me', d: 'M 428 106 L 466 100 L 490 116 L 488 140 L 462 147 L 434 132 Z' },
-  // Asia (main body)
-  { id: 'as', d: 'M 420 54 L 502 46 L 582 50 L 648 57 L 702 64 L 726 86 L 730 112 L 716 138 L 693 155 L 648 164 L 590 168 L 545 175 L 510 165 L 472 152 L 448 132 L 430 108 L 422 80 Z' },
-  // Indian subcontinent
-  { id: 'in', d: 'M 488 162 L 520 165 L 536 192 L 520 218 L 500 220 L 484 202 L 482 176 Z' },
-  // Southeast Asia
-  { id: 'se', d: 'M 590 158 L 635 160 L 660 175 L 658 196 L 634 200 L 607 194 L 590 178 Z' },
+  { id: 'af', d: 'M 365 125 L 410 118 L 455 128 L 485 160 L 495 205 L 488 255 L 465 300 L 430 335 L 390 340 L 360 315 L 345 275 L 340 230 L 342 185 L 350 150 Z' },
+  // Middle East (Arabian Peninsula)
+  { id: 'me', d: 'M 455 108 L 490 102 L 515 118 L 510 148 L 480 155 L 458 138 Z' },
+  // Asia (main body - Russia, China, Siberia)
+  { id: 'as', d: 'M 460 50 L 540 45 L 620 48 L 695 58 L 745 72 L 760 100 L 750 130 L 720 155 L 670 168 L 610 172 L 555 175 L 510 165 L 475 152 L 455 130 L 445 105 L 448 75 Z' },
+  // Indian Subcontinent
+  { id: 'in', d: 'M 515 168 L 545 172 L 558 195 L 565 225 L 552 248 L 530 255 L 512 235 L 508 200 L 510 178 Z' },
+  // Southeast Asia (Indochina, Malaysia, Indonesia arc)
+  { id: 'se', d: 'M 595 165 L 635 168 L 665 182 L 675 205 L 660 218 L 630 215 L 605 200 L 590 185 Z M 655 225 L 685 222 L 715 228 L 735 245 L 720 258 L 685 262 L 660 252 Z' },
   // Australia
-  { id: 'au', d: 'M 614 240 L 665 232 L 706 242 L 720 268 L 714 296 L 686 312 L 646 312 L 618 298 L 604 272 L 608 252 Z' },
-  // Japan
-  { id: 'jp', d: 'M 698 86 L 720 82 L 732 94 L 728 112 L 712 118 L 698 108 Z' },
-  // UK island (small)
-  { id: 'uk', d: 'M 334 56 L 344 52 L 350 60 L 344 70 L 336 66 Z' },
+  { id: 'au', d: 'M 645 265 L 695 260 L 740 270 L 760 300 L 755 335 L 725 355 L 680 352 L 650 335 L 635 305 Z' },
+  // Japan (island chain)
+  { id: 'jp', d: 'M 725 95 L 745 92 L 755 105 L 752 125 L 740 135 L 728 125 L 722 108 Z' },
 ];
 
-// City positions on the 800×400 viewBox (approximate lon/lat projection)
+// City positions on the 800×400 viewBox (aligned with new continent shapes)
 const CITIES = [
-  { id: 'chennai',  label: 'Chennai',   x: 543, y: 182, isOrigin: true  },
-  { id: 'london',   label: 'London',    x: 352, y: 74,  isOrigin: false },
-  { id: 'newyork',  label: 'New York',  x: 195, y: 100, isOrigin: false },
-  { id: 'singapore',label: 'Singapore', x: 627, y: 188, isOrigin: false },
-  { id: 'sydney',   label: 'Sydney',    x: 700, y: 278, isOrigin: false },
-  { id: 'toronto',  label: 'Toronto',   x: 188, y: 93,  isOrigin: false },
-  { id: 'dubai',    label: 'Dubai',     x: 510, y: 140, isOrigin: false },
-  { id: 'tokyo',    label: 'Tokyo',     x: 706, y: 108, isOrigin: false },
+  { id: 'chennai',  label: 'Chennai',   x: 535, y: 215, isOrigin: true  },
+  { id: 'london',   label: 'London',    x: 368, y: 68,  isOrigin: false },
+  { id: 'newyork',  label: 'New York',  x: 205, y: 105, isOrigin: false },
+  { id: 'singapore',label: 'Singapore', x: 615, y: 195, isOrigin: false },
+  { id: 'sydney',   label: 'Sydney',    x: 710, y: 315, isOrigin: false },
+  { id: 'toronto',  label: 'Toronto',   x: 198, y: 95,  isOrigin: false },
+  { id: 'dubai',    label: 'Dubai',     x: 485, y: 135, isOrigin: false },
+  { id: 'tokyo',    label: 'Tokyo',     x: 738, y: 112, isOrigin: false },
 ];
 
 // Build arc path from Chennai to each destination
