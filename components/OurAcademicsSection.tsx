@@ -2,66 +2,43 @@
 
 import { useRef } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
-import Image from 'next/image';
 
-// ─── Programme Data ───────────────────────────────────────────────────────────
+// ─── Campus Data ──────────────────────────────────────────────────────────────
 
-const PROGRAMMES = [
+const CAMPUSES = [
   {
-    id: 'kkic',
-    eyebrow: 'KINDLE KIDS INTERNATIONAL CURRICULUM',
-    headline: 'Kindle Kids International\nCurriculum (KKIC)',
-    body: "Kindle Kids™ is an indigenously researched curriculum developed by an expert R&D team with over a decade of experience in preschool & primary education systems. Our curriculum encourages young learners to explore, discover, and develop a lifelong love for learning.",
-    badge: 'KKIC',
-    badgeInitial: 'KK',
-    image: '/images/academic-kkic.jpg',
-    imageAlt: 'KKIC programme — Vaels International School',
-    bg: '#E6F0FF',
-    textOnBg: '#1A3C6E',
-    imageRight: true,
-  },
-  {
-    id: 'cambridge',
-    eyebrow: 'IGCSE / AS / A LEVELS',
-    headline: 'Cambridge International\nEducation',
-    body: "We offer Cambridge International Education (IGCSE, AS, and A Levels) to provide a globally recognized education. Our programs develop critical thinking and subject mastery, preparing students for top universities and successful careers. With expert faculty and a holistic approach, we help students succeed worldwide.",
-    badge: 'Cambridge Assessment\nInternational Education',
-    badgeInitial: 'C',
-    image: '/images/academic-cambridge.jpg',
-    imageAlt: 'Cambridge programme — Vaels International School',
+    id: 'pre-school',
+    label: 'Pre School',
+    location: 'Neelankarai',
+    title: 'Pre School\n— Neelankarai',
     bg: '#1A3C6E',
     textOnBg: '#F8F6F2',
-    imageRight: false,
+    imageRight: true,
   },
   {
-    id: 'cisce',
-    eyebrow: 'ICSE · ISC',
-    headline: 'Council For The Indian School\nCertificate Examinations',
-    body: "We offer the Council for the Indian School Certificate Examinations (CISCE) curriculum to provide a comprehensive and balanced education. The CISCE's ICSE and ISC programs are designed to encourage analytical thinking, creativity, and a deep understanding of various subjects.",
-    badge: 'CISCE',
-    badgeInitial: 'CI',
-    image: '/images/academic-cisce.jpg',
-    imageAlt: 'CISCE programme — Vaels International School',
+    id: 'high-school',
+    label: 'High School',
+    location: 'Injambakkam',
+    title: 'High School\n— Injambakkam',
     bg: '#F8F6F2',
     textOnBg: '#1A3C6E',
-    imageRight: true,
+    imageRight: false,
   },
 ] as const;
 
-// ─── Programme Card ───────────────────────────────────────────────────────────
+// ─── Campus Card ──────────────────────────────────────────────────────────────
 
-interface ProgrammeCardProps {
-  programme: (typeof PROGRAMMES)[number];
+interface CampusCardProps {
+  campus: (typeof CAMPUSES)[number];
   index: number;
 }
 
-function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
+function CampusCard({ campus, index }: CampusCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-7% 0px' });
-  const fromLeft = !programme.imageRight;
+  const fromLeft = !campus.imageRight;
 
-  // Each card gets a slightly different duration for non-uniform, human feel
-  const dur = [0.88, 0.92, 0.86][index] ?? 0.9;
+  const dur = [0.88, 0.92][index] ?? 0.9;
 
   const textVariants: Variants = {
     hidden: { opacity: 0, x: fromLeft ? 44 : -44, filter: 'blur(8px)' },
@@ -79,8 +56,8 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
     },
   };
 
-  const textColOrder = programme.imageRight ? 0 : 1;
-  const imageColOrder = programme.imageRight ? 1 : 0;
+  const textColOrder = campus.imageRight ? 0 : 1;
+  const imageColOrder = campus.imageRight ? 1 : 0;
 
   return (
     <motion.div
@@ -93,14 +70,14 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
         borderRadius: '24px',
         overflow: 'hidden',
         boxShadow: '0 8px 48px rgba(26, 60, 110, 0.1)',
-        minHeight: 'clamp(380px, 45vw, 520px)',
+        minHeight: 'clamp(320px, 38vw, 440px)',
       }}
     >
       {/* Text Panel */}
       <motion.div
         variants={textVariants}
         style={{
-          background: programme.bg,
+          background: campus.bg,
           padding: 'clamp(40px, 5vw, 72px)',
           display: 'flex',
           flexDirection: 'column',
@@ -136,91 +113,62 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
             color: '#D4AF37',
             textTransform: 'uppercase',
           }}>
-            {programme.eyebrow}
+            {campus.label}
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Title */}
         <h3 style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: 'clamp(28px, 3.2vw, 46px)',
           fontWeight: 600,
-          color: programme.textOnBg,
+          color: campus.textOnBg,
           lineHeight: 1.08,
           letterSpacing: '-0.01em',
           margin: 0,
           whiteSpace: 'pre-line',
         }}>
-          {programme.headline.split('\n').map((line, i) => (
+          {campus.title.split('\n').map((line, i) => (
             <span key={i} style={i === 1 ? { fontStyle: 'italic', display: 'block' } : { display: 'block' }}>
               {line}
             </span>
           ))}
         </h3>
 
-        {/* Body */}
-        <p style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 'clamp(13px, 1.1vw, 15px)',
-          fontWeight: 300,
-          color: programme.bg === '#1A3C6E'
-            ? 'rgba(248, 246, 242, 0.68)'
-            : 'rgba(26, 60, 110, 0.62)',
-          lineHeight: 1.75,
-          margin: 0,
-          maxWidth: '400px',
-        }}>
-          {programme.body}
-        </p>
-
-        {/* Credential Badge */}
+        {/* Location badge */}
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '12px',
-          background: programme.bg === '#1A3C6E'
+          gap: '10px',
+          background: campus.bg === '#1A3C6E'
             ? 'rgba(248, 246, 242, 0.06)'
             : 'rgba(26, 60, 110, 0.05)',
           border: '1px solid rgba(212, 175, 55, 0.25)',
           borderRadius: '100px',
-          padding: '10px 18px',
+          padding: '8px 16px',
           alignSelf: 'flex-start',
-          marginTop: '8px',
+          marginTop: '4px',
         }}>
           <div style={{
-            width: '28px',
-            height: '28px',
+            width: '6px',
+            height: '6px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #D4AF37, #F5E9B8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            background: '#D4AF37',
             flexShrink: 0,
-          }}>
-            <span style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '11px',
-              fontWeight: 700,
-              color: '#0F2548',
-            }}>
-              {programme.badgeInitial}
-            </span>
-          </div>
+          }} />
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '11px',
-            letterSpacing: '0.1em',
+            letterSpacing: '0.12em',
             fontWeight: 500,
             color: '#D4AF37',
-            whiteSpace: 'pre-line',
-            lineHeight: 1.4,
           }}>
-            {programme.badge}
+            {campus.location}
           </span>
         </div>
       </motion.div>
 
-      {/* Image Panel */}
+      {/* Image Placeholder Panel */}
       <motion.div
         variants={imageVariants}
         style={{
@@ -228,22 +176,51 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
           order: imageColOrder,
           minHeight: '300px',
           overflow: 'hidden',
+          background: 'linear-gradient(145deg, #DDE8F8 0%, #C8D8F0 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Image
-          src={programme.image}
-          alt={programme.imageAlt}
-          fill
-          quality={88}
-          className="object-cover"
-          style={{ objectPosition: programme.id === 'cambridge' ? 'center 20%' : programme.id === 'cisce' ? 'center 30%' : 'center 40%' }}
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-        {/* Subtle colour grade */}
+        {/* Placeholder pattern */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(135deg, rgba(26,60,110,0.22) 0%, transparent 60%)',
+          backgroundImage: `
+            linear-gradient(rgba(26,60,110,0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(26,60,110,0.06) 1px, transparent 1px)
+          `,
+          backgroundSize: '32px 32px',
+        }} aria-hidden="true" />
+        <div style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '10px',
+          opacity: 0.4,
+        }}>
+          <div style={{
+            width: '48px',
+            height: '48px',
+            borderRadius: '12px',
+            border: '2px solid #1A3C6E',
+          }} />
+          <span style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '10px',
+            letterSpacing: '0.16em',
+            color: '#1A3C6E',
+            textTransform: 'uppercase',
+          }}>
+            Image
+          </span>
+        </div>
+        {/* Colour grade overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(135deg, rgba(26,60,110,0.08) 0%, transparent 60%)',
           pointerEvents: 'none',
         }} />
       </motion.div>
@@ -251,11 +228,10 @@ function ProgrammeCard({ programme, index }: ProgrammeCardProps) {
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// ─── Header Variants ──────────────────────────────────────────────────────────
 
 const headerVariants: Variants = {
   hidden: {},
-  // Academics: 0.12s delay — sits between About (0.1) and WhyVaels (0.18)
   visible: { transition: { staggerChildren: 0.11, delayChildren: 0.12 } },
 };
 
@@ -263,18 +239,22 @@ const headerItemVariants: Variants = {
   hidden: { opacity: 0, y: 18, filter: 'blur(6px)' },
   visible: {
     opacity: 1, y: 0, filter: 'blur(0px)',
-    // Slightly longer than About (0.75) for a calmer academic feel
     transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
-export default function AcademicExcellenceSection() {
+// ─── Main Component ───────────────────────────────────────────────────────────
+
+export default function OurAcademicsSection() {
   const headerRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+
   const headerInView = useInView(headerRef, { once: true, margin: '-5% 0px' });
+  const ctaInView = useInView(ctaRef, { once: true, margin: '-5% 0px' });
 
   return (
     <section
-      id="programmes"
+      id="academics"
       style={{
         background: 'linear-gradient(to bottom, #F2F4F8 0%, #F8F6F2 clamp(48px,6vw,80px), #F8F6F2 100%)',
         padding: 'clamp(80px, 10vw, 140px) 0',
@@ -304,7 +284,7 @@ export default function AcademicExcellenceSection() {
               color: '#D4AF37',
               textTransform: 'uppercase',
             }}>
-              Our Curriculum
+              Campus Locations
             </span>
             <div style={{ width: '32px', height: '1px', background: 'linear-gradient(90deg, #D4AF37, transparent)' }} />
           </motion.div>
@@ -323,48 +303,52 @@ export default function AcademicExcellenceSection() {
             }}
           >
             Our{' '}
-            <span style={{ fontStyle: 'italic', color: '#0F2548' }}>Curriculum</span>
+            <span style={{ fontStyle: 'italic', color: '#0F2548' }}>Academics</span>
           </motion.h2>
         </motion.div>
 
-        {/* Programme Cards */}
+        {/* Campus Cards */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 40px)' }}>
-          {PROGRAMMES.map((programme, index) => (
-            <ProgrammeCard key={programme.id} programme={programme} index={index} />
+          {CAMPUSES.map((campus, index) => (
+            <CampusCard key={campus.id} campus={campus} index={index} />
           ))}
         </div>
 
-        {/* Read More CTA */}
-        <div style={{ textAlign: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}>
+        {/* Explore More CTA */}
+        <motion.div
+          ref={ctaRef}
+          initial={{ opacity: 0, y: 16 }}
+          animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+          style={{ textAlign: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}
+        >
           <button
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '12px',
               letterSpacing: '0.22em',
               fontWeight: 500,
-              color: '#1A3C6E',
+              color: '#F8F6F2',
               textTransform: 'uppercase',
-              background: 'transparent',
-              border: '1px solid rgba(26, 60, 110, 0.3)',
+              background: '#1A3C6E',
+              border: '1px solid #1A3C6E',
               borderRadius: '100px',
-              padding: '14px 36px',
+              padding: '14px 40px',
               cursor: 'pointer',
               transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
             onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.background = '#1A3C6E';
-              (e.currentTarget as HTMLButtonElement).style.color = '#F8F6F2';
-              (e.currentTarget as HTMLButtonElement).style.borderColor = '#1A3C6E';
+              (e.currentTarget as HTMLButtonElement).style.background = '#0F2548';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = '#0F2548';
             }}
             onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-              (e.currentTarget as HTMLButtonElement).style.color = '#1A3C6E';
-              (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(26, 60, 110, 0.3)';
+              (e.currentTarget as HTMLButtonElement).style.background = '#1A3C6E';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = '#1A3C6E';
             }}
           >
-            Read More...
+            Explore More
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
