@@ -7,6 +7,7 @@ import AcademicExcellenceSection from '@/components/AcademicExcellenceSection';
 import OurAcademicsSection from '@/components/OurAcademicsSection';
 import OurAlumniSection from '@/components/OurAlumniSection';
 import StudentsLifeSection from '@/components/StudentsLifeSection';
+import WhatParentsAreSayingSection from '@/components/WhatParentsAreSayingSection';
 import CTASection from '@/components/CTASection';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
 import LuxuryCursor from '@/components/LuxuryCursor';
@@ -38,6 +39,8 @@ export default function Home() {
       <OurAlumniSection />
       <div className="section-sep" />
       <StudentsLifeSection />
+      <div className="section-sep" />
+      <WhatParentsAreSayingSection />
       <CTASection />
     </main>
   );
