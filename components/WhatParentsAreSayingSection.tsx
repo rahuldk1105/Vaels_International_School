@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 
 // ─── Testimonial Data ─────────────────────────────────────────────────────────
 
@@ -59,7 +59,6 @@ function AvatarPlaceholder({ name, index }: { name: string; index: number }) {
     .slice(0, 2)
     .join('');
 
-  // Subtle variation in the placeholder tint per card
   const tints = [
     'rgba(26,60,110,0.10)',
     'rgba(212,175,55,0.12)',
@@ -71,10 +70,10 @@ function AvatarPlaceholder({ name, index }: { name: string; index: number }) {
 
   return (
     <div style={{
-      width: '44px',
-      height: '44px',
+      width: '56px',
+      height: '56px',
       borderRadius: '50%',
-      border: '1.5px solid rgba(212, 175, 55, 0.4)',
+      border: '2px solid rgba(212, 175, 55, 0.5)',
       background: `linear-gradient(135deg, ${tints[index % tints.length]}, rgba(26,60,110,0.06))`,
       display: 'flex',
       alignItems: 'center',
@@ -83,7 +82,7 @@ function AvatarPlaceholder({ name, index }: { name: string; index: number }) {
     }}>
       <span style={{
         fontFamily: "'Cormorant Garamond', serif",
-        fontSize: '14px',
+        fontSize: '18px',
         fontWeight: 600,
         color: '#D4AF37',
         letterSpacing: '0.04em',
@@ -95,54 +94,128 @@ function AvatarPlaceholder({ name, index }: { name: string; index: number }) {
   );
 }
 
-// ─── Testimonial Card ─────────────────────────────────────────────────────────
+// ─── Navigation Arrow ─────────────────────────────────────────────────────────
 
-interface TestimonialCardProps {
-  testimonial: (typeof TESTIMONIALS)[number];
-  index: number;
-  inView: boolean;
+function NavArrow({ direction, onClick }: { direction: 'prev' | 'next'; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.button
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      style={{
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        [direction === 'prev' ? 'left' : 'right']: 'clamp(8px, 2vw, 24px)',
+        width: '44px',
+        height: '44px',
+        borderRadius: '50%',
+        border: `1.5px solid ${hovered ? 'rgba(212, 175, 55, 0.6)' : 'rgba(26, 60, 110, 0.2)'}`,
+        background: hovered ? 'rgba(212, 175, 55, 0.1)' : 'rgba(248, 246, 242, 0.8)',
+        backdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        zIndex: 10,
+        transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+        boxShadow: hovered 
+          ? '0 4px 16px rgba(212, 175, 55, 0.2)' 
+          : '0 2px 12px rgba(26, 60, 110, 0.08)',
+      }}
+      aria-label={direction === 'prev' ? 'Previous testimonial' : 'Next testimonial'}
+    >
+      <span style={{
+        fontSize: '20px',
+        color: hovered ? '#D4AF37' : '#1A3C6E',
+        lineHeight: 1,
+        transition: 'color 0.3s ease',
+      }}>
+        {direction === 'prev' ? '←' : '→'}
+      </span>
+    </motion.button>
+  );
 }
 
-function TestimonialCard({ testimonial, index, inView }: TestimonialCardProps) {
+// ─── Carousel Dots ────────────────────────────────────────────────────────────
+
+function CarouselDots({ total, current, onDotClick }: { 
+  total: number; 
+  current: number; 
+  onDotClick: (index: number) => void;
+}) {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: 'clamp(32px, 4vw, 48px)',
+    }}>
+      {Array.from({ length: total }).map((_, i) => (
+        <motion.button
+          key={i}
+          onClick={() => onDotClick(i)}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
+          style={{
+            width: current === i ? '24px' : '8px',
+            height: '8px',
+            borderRadius: '4px',
+            background: current === i 
+              ? 'linear-gradient(90deg, #C9A227, #D4AF37)' 
+              : 'rgba(26, 60, 110, 0.2)',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+            boxShadow: current === i ? '0 2px 8px rgba(212, 175, 55, 0.3)' : 'none',
+          }}
+          aria-label={`Go to testimonial ${i + 1}`}
+          aria-current={current === i}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Testimonial Slide ────────────────────────────────────────────────────────
+
+interface TestimonialSlideProps {
+  testimonial: (typeof TESTIMONIALS)[number];
+  index: number;
+}
+
+function TestimonialSlide({ testimonial, index }: TestimonialSlideProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
-      animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.24 + index * 0.12 }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -24 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       style={{
-        background: '#ffffff',
-        border: '1px solid rgba(26, 60, 110, 0.07)',
-        borderTop: '2px solid rgba(212, 175, 55, 0.45)',
-        borderRadius: '20px',
-        padding: 'clamp(24px, 2.5vw, 36px)',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        gap: '18px',
-        boxShadow: '0 4px 28px rgba(26, 60, 110, 0.07)',
-        position: 'relative',
-        overflow: 'hidden',
+        alignItems: 'center',
+        textAlign: 'center',
+        maxWidth: '840px',
+        margin: '0 auto',
+        padding: '0 clamp(24px, 4vw, 48px)',
       }}
     >
-      {/* Subtle corner glow */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        width: '80px',
-        height: '80px',
-        background: 'radial-gradient(circle at top right, rgba(212,175,55,0.07), transparent)',
-        pointerEvents: 'none',
-      }} aria-hidden="true" />
-
       {/* Stars */}
-      <div style={{ display: 'flex', gap: '4px' }}>
+      <div style={{ display: 'flex', gap: '6px', marginBottom: '24px' }}>
         {Array.from({ length: 5 }).map((_, i) => (
           <motion.span
             key={i}
             initial={{ opacity: 0, scale: 0.5 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.3, delay: 0.38 + index * 0.12 + i * 0.06 }}
-            style={{ color: '#D4AF37', fontSize: '13px', lineHeight: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
+            style={{ color: '#D4AF37', fontSize: '18px', lineHeight: 1 }}
             aria-hidden="true"
           >
             ★
@@ -153,13 +226,12 @@ function TestimonialCard({ testimonial, index, inView }: TestimonialCardProps) {
       {/* Quote */}
       <p style={{
         fontFamily: "'Cormorant Garamond', serif",
-        fontSize: 'clamp(15px, 1.35vw, 19px)',
+        fontSize: 'clamp(20px, 3vw, 36px)',
         fontStyle: 'italic',
         fontWeight: 400,
-        color: 'rgba(26, 60, 110, 0.78)',
-        lineHeight: 1.65,
-        margin: 0,
-        flex: 1,
+        color: 'rgba(26, 60, 110, 0.85)',
+        lineHeight: 1.5,
+        margin: '0 0 32px 0',
       }}>
         "{testimonial.quote}"
       </p>
@@ -167,16 +239,16 @@ function TestimonialCard({ testimonial, index, inView }: TestimonialCardProps) {
       {/* Attribution */}
       <div style={{
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        gap: '12px',
-        borderTop: '1px solid rgba(26, 60, 110, 0.07)',
-        paddingTop: '18px',
+        gap: '16px',
+        marginTop: '24px',
       }}>
         <AvatarPlaceholder name={testimonial.name} index={index} />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '13px',
+            fontSize: '16px',
             fontWeight: 600,
             color: '#1A3C6E',
             letterSpacing: '0.03em',
@@ -185,9 +257,9 @@ function TestimonialCard({ testimonial, index, inView }: TestimonialCardProps) {
           </span>
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '11px',
+            fontSize: '13px',
             fontWeight: 300,
-            color: 'rgba(26, 60, 110, 0.45)',
+            color: 'rgba(26, 60, 110, 0.55)',
             letterSpacing: '0.05em',
           }}>
             {testimonial.role}
@@ -200,12 +272,12 @@ function TestimonialCard({ testimonial, index, inView }: TestimonialCardProps) {
 
 // ─── Section Variants ─────────────────────────────────────────────────────────
 
-const headerVariants: Variants = {
+const headerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.11, delayChildren: 0.15 } },
 };
 
-const headerItemVariants: Variants = {
+const headerItemVariants = {
   hidden: { opacity: 0, y: 20, filter: 'blur(6px)' },
   visible: {
     opacity: 1, y: 0, filter: 'blur(0px)',
@@ -217,10 +289,32 @@ const headerItemVariants: Variants = {
 
 export default function WhatParentsAreSayingSection() {
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const headerInView = useInView(headerRef, { once: true, margin: '-8% 0px' });
-  const cardsInView = useInView(cardsRef, { once: true, margin: '-5% 0px' });
+  const carouselInView = useInView(carouselRef, { once: true, margin: '-5% 0px' });
+
+  // Auto-advance carousel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+    }, 6000); // Change slide every 6 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
 
   return (
     <section
@@ -312,30 +406,46 @@ export default function WhatParentsAreSayingSection() {
           aria-hidden="true"
         />
 
-        {/* Testimonial Cards Grid */}
-        <div
-          ref={cardsRef}
+        {/* Carousel Container */}
+        <motion.div
+          ref={carouselRef}
+          initial={{ opacity: 0 }}
+          animate={carouselInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-            gap: 'clamp(24px, 2vw, 32px)',
-            alignItems: 'start',
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: 'clamp(400px, 50vw, 500px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          {TESTIMONIALS.map((t, i) => (
-            <TestimonialCard
-              key={t.id}
-              testimonial={t}
-              index={i}
-              inView={cardsInView}
+          {/* Navigation Arrows */}
+          <NavArrow direction="prev" onClick={goToPrev} />
+          <NavArrow direction="next" onClick={goToNext} />
+
+          {/* Testimonial Slides */}
+          <AnimatePresence mode="wait">
+            <TestimonialSlide
+              key={TESTIMONIALS[currentIndex].id}
+              testimonial={TESTIMONIALS[currentIndex]}
+              index={currentIndex}
             />
-          ))}
-        </div>
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Carousel Dots */}
+        <CarouselDots
+          total={TESTIMONIALS.length}
+          current={currentIndex}
+          onDotClick={goToSlide}
+        />
 
         {/* Bottom accent line */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
-          animate={cardsInView ? { scaleX: 1, opacity: 1 } : {}}
+          animate={carouselInView ? { scaleX: 1, opacity: 1 } : {}}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
           style={{
             marginTop: 'clamp(48px, 5vw, 64px)',
