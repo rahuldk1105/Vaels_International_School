@@ -277,7 +277,7 @@ export default function AcademicExcellenceSection() {
       id="programmes"
       style={{
         background: 'linear-gradient(to bottom, #F2F4F8 0%, #F8F6F2 clamp(48px,6vw,80px), #F8F6F2 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
       }}
     >
@@ -289,7 +289,7 @@ export default function AcademicExcellenceSection() {
           variants={headerVariants}
           initial="hidden"
           animate={headerInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vw, 88px)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           <motion.div
             variants={headerItemVariants}
@@ -328,14 +328,14 @@ export default function AcademicExcellenceSection() {
         </motion.div>
 
         {/* Programme Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 40px)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 2.5vw, 32px)' }}>
           {PROGRAMMES.map((programme, index) => (
             <ProgrammeCard key={programme.id} programme={programme} index={index} />
           ))}
         </div>
 
         {/* Read More CTA */}
-        <div style={{ textAlign: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}>
+        <div style={{ textAlign: 'center', marginTop: 'clamp(48px, 5vw, 64px)' }}>
           <button
             style={{
               fontFamily: "'DM Sans', sans-serif",

@@ -257,7 +257,7 @@ export default function OurAcademicsSection() {
       id="academics"
       style={{
         background: 'linear-gradient(to bottom, #F2F4F8 0%, #F8F6F2 clamp(48px,6vw,80px), #F8F6F2 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
       }}
     >
@@ -269,7 +269,7 @@ export default function OurAcademicsSection() {
           variants={headerVariants}
           initial="hidden"
           animate={headerInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vw, 88px)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           <motion.div
             variants={headerItemVariants}
@@ -308,7 +308,7 @@ export default function OurAcademicsSection() {
         </motion.div>
 
         {/* Campus Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 40px)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 2.5vw, 32px)' }}>
           {CAMPUSES.map((campus, index) => (
             <CampusCard key={campus.id} campus={campus} index={index} />
           ))}
@@ -320,7 +320,7 @@ export default function OurAcademicsSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          style={{ textAlign: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}
+          style={{ textAlign: 'center', marginTop: 'clamp(48px, 5vw, 64px)' }}
         >
           <button
             style={{

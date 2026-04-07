@@ -250,7 +250,7 @@ export default function CampusExperienceSection() {
       id="campus"
       style={{
         background: 'linear-gradient(to bottom, #F8F6F2 0%, #F2F4F8 clamp(48px,6vw,80px), #F2F4F8 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
       }}
     >
@@ -262,7 +262,7 @@ export default function CampusExperienceSection() {
           variants={headerVariants}
           initial="hidden"
           animate={headerInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 72px)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           <motion.div
             variants={headerItemVariants}
@@ -312,7 +312,7 @@ export default function CampusExperienceSection() {
               "library library sports"
               "labs    stat   arts  "
             `,
-            gap: 'clamp(10px, 1.2vw, 16px)',
+            gap: 'clamp(24px, 2vw, 32px)',
           }}
           className="campus-bento"
         >

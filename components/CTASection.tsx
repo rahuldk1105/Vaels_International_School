@@ -270,7 +270,7 @@ export default function CTASection() {
       data-dark-section="true"
       style={{
         background: 'linear-gradient(160deg, #0F2548 0%, #1A3C6E 45%, #0F2548 100%)',
-        padding: 'clamp(96px, 12vw, 168px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
         position: 'relative',
       }}

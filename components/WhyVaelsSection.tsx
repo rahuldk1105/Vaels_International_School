@@ -519,7 +519,7 @@ export default function WhyVaelsSection() {
       className="section-ambient"
       style={{
         background: 'linear-gradient(175deg, #F8F6F2 0%, #F2F4F8 30%, #EEF2FA 80%, #F2F4F8 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
         position: 'relative',
       }}
@@ -539,7 +539,7 @@ export default function WhyVaelsSection() {
           animate={headerInView ? 'visible' : 'hidden'}
           style={{
             textAlign: 'center',
-            marginBottom: 'clamp(48px, 6vw, 80px)',
+            marginBottom: 'clamp(48px, 5vw, 64px)',
           }}
         >
           {/* Eyebrow */}
@@ -607,7 +607,7 @@ export default function WhyVaelsSection() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-            gap: 'clamp(16px, 2vw, 24px)',
+            gap: 'clamp(24px, 2vw, 32px)',
           }}
         >
           {PILLARS.map((pillar, index) => (
@@ -630,7 +630,7 @@ export default function WhyVaelsSection() {
           }
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.8 }}
           style={{
-            marginTop: 'clamp(48px, 6vw, 72px)',
+            marginTop: 'clamp(48px, 5vw, 64px)',
             height: '1px',
             background:
               'linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.35), transparent)',

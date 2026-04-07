@@ -205,7 +205,7 @@ export default function AboutSection() {
       ref={sectionRef}
       style={{
         background: '#F8F6F2',
-        padding: 'clamp(72px, 10vw, 132px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
       }}
     >

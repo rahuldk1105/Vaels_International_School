@@ -211,7 +211,7 @@ export default function OurAlumniSection() {
           variants={headerVariants}
           initial="hidden"
           animate={headerInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 6vw, 80px)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           <motion.div
             variants={headerItemVariants}
@@ -258,7 +258,7 @@ export default function OurAlumniSection() {
           style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent)',
-            marginBottom: 'clamp(40px, 5vw, 64px)',
+            marginBottom: 'clamp(48px, 5vw, 64px)',
             transformOrigin: 'center',
           }}
           aria-hidden="true"
@@ -270,7 +270,7 @@ export default function OurAlumniSection() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
-            gap: 'clamp(14px, 2vw, 22px)',
+            gap: 'clamp(24px, 2vw, 32px)',
           }}
         >
           {ALUMNI.map((alumnus, i) => (
@@ -289,7 +289,7 @@ export default function OurAlumniSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-          style={{ textAlign: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}
+          style={{ textAlign: 'center', marginTop: 'clamp(48px, 5vw, 64px)' }}
         >
           <button
             style={{

@@ -180,7 +180,7 @@ export default function StudentsLifeSection() {
       className="section-ambient"
       style={{
         background: 'linear-gradient(175deg, #F8F6F2 0%, #F2F4F8 30%, #EEF2FA 80%, #F2F4F8 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
         position: 'relative',
       }}
@@ -193,7 +193,7 @@ export default function StudentsLifeSection() {
           variants={headerVariants}
           initial="hidden"
           animate={headerInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 72px)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           <motion.div
             variants={headerItemVariants}
@@ -237,7 +237,7 @@ export default function StudentsLifeSection() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-            gap: 'clamp(16px, 2vw, 24px)',
+            gap: 'clamp(24px, 2vw, 32px)',
             alignItems: 'stretch',
           }}
         >
@@ -252,7 +252,7 @@ export default function StudentsLifeSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          style={{ textAlign: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}
+          style={{ textAlign: 'center', marginTop: 'clamp(48px, 5vw, 64px)' }}
         >
           <button
             style={{
@@ -290,7 +290,7 @@ export default function StudentsLifeSection() {
           animate={ctaInView ? { scaleX: 1, opacity: 1 } : {}}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
           style={{
-            marginTop: 'clamp(40px, 5vw, 60px)',
+            marginTop: 'clamp(48px, 5vw, 64px)',
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.35), transparent)',
             transformOrigin: 'center',

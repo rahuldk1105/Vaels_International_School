@@ -217,7 +217,7 @@ export default function SocialProofSection() {
       data-dark-section="true"
       style={{
         background: 'linear-gradient(160deg, #1A3C6E 0%, #0F2548 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
         position: 'relative',
       }}
@@ -253,7 +253,7 @@ export default function SocialProofSection() {
           variants={spotlightVariants}
           initial="hidden"
           animate={spotlightInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto', marginBottom: 'clamp(56px, 7vw, 96px)' }}
+          style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           {/* Section eyebrow */}
           <motion.div
@@ -360,7 +360,7 @@ export default function SocialProofSection() {
           style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent)',
-            marginBottom: 'clamp(48px, 6vw, 80px)',
+            marginBottom: 'clamp(48px, 5vw, 64px)',
             transformOrigin: 'center',
           }}
           aria-hidden="true"
@@ -372,7 +372,7 @@ export default function SocialProofSection() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-            gap: 'clamp(14px, 2vw, 22px)',
+            gap: 'clamp(24px, 2vw, 32px)',
           }}
         >
           {SUPPORTING.map((t, i) => (

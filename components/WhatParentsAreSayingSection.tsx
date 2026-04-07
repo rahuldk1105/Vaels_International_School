@@ -228,7 +228,7 @@ export default function WhatParentsAreSayingSection() {
       className="section-ambient"
       style={{
         background: 'linear-gradient(175deg, #F8F6F2 0%, #F2F4F8 30%, #EEF2FA 80%, #F2F4F8 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(32px, 4vw, 48px) 0',
         overflow: 'hidden',
         position: 'relative',
       }}
@@ -241,7 +241,7 @@ export default function WhatParentsAreSayingSection() {
           variants={headerVariants}
           initial="hidden"
           animate={headerInView ? 'visible' : 'hidden'}
-          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 6vw, 80px)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
           {/* Eyebrow */}
           <motion.div
@@ -306,7 +306,7 @@ export default function WhatParentsAreSayingSection() {
           style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)',
-            marginBottom: 'clamp(40px, 5vw, 64px)',
+            marginBottom: 'clamp(48px, 5vw, 64px)',
             transformOrigin: 'center',
           }}
           aria-hidden="true"
@@ -318,7 +318,7 @@ export default function WhatParentsAreSayingSection() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-            gap: 'clamp(14px, 2vw, 22px)',
+            gap: 'clamp(24px, 2vw, 32px)',
             alignItems: 'start',
           }}
         >
@@ -338,7 +338,7 @@ export default function WhatParentsAreSayingSection() {
           animate={cardsInView ? { scaleX: 1, opacity: 1 } : {}}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
           style={{
-            marginTop: 'clamp(48px, 6vw, 72px)',
+            marginTop: 'clamp(48px, 5vw, 64px)',
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.35), transparent)',
             transformOrigin: 'center',
