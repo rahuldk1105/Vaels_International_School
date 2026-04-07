@@ -11,24 +11,28 @@ const ALUMNI = [
     name: 'Shahana Yusuf',
     university: 'UCL',
     country: 'UK',
+    image: '/images/sahana yusuf.webp',
   },
   {
     id: 'nikhil',
     name: 'Nikhil',
     university: 'University of Real Madrid',
     country: 'Spain',
+    image: '/images/nikil.webp',
   },
   {
     id: 'sakthi',
     name: 'Sakthi Suresh Kumar',
     university: 'Medical College',
     country: 'Chengalpattu',
+    image: '/images/sakthi suresh kumar.webp',
   },
   {
     id: 'vamsidhar',
     name: 'Vamsidhar Krishnan',
     university: 'University of Leed',
     country: 'United Kingdom',
+    image: '/images/vamsidhar krishnan.webp',
   },
 ] as const;
 
@@ -41,13 +45,6 @@ interface AlumniCardProps {
 }
 
 function AlumniCard({ alumnus, index, inView }: AlumniCardProps) {
-  // Derive initials for the circular placeholder
-  const initials = alumnus.name
-    .split(' ')
-    .map(w => w[0])
-    .slice(0, 2)
-    .join('');
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
@@ -68,7 +65,7 @@ function AlumniCard({ alumnus, index, inView }: AlumniCardProps) {
         textAlign: 'center',
       }}
     >
-      {/* Circular placeholder avatar */}
+      {/* Alumni avatar */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={inView ? { scale: 1, opacity: 1 } : {}}
@@ -78,25 +75,20 @@ function AlumniCard({ alumnus, index, inView }: AlumniCardProps) {
           height: 'clamp(72px, 8vw, 96px)',
           borderRadius: '50%',
           border: '2px solid rgba(212, 175, 55, 0.45)',
-          background: 'linear-gradient(135deg, rgba(212,175,55,0.18) 0%, rgba(26,60,110,0.25) 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          overflow: 'hidden',
           flexShrink: 0,
+          position: 'relative',
         }}
       >
-        <span
+        <img
+          src={alumnus.image}
+          alt={alumnus.name}
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(22px, 2.5vw, 30px)',
-            fontWeight: 600,
-            color: '#D4AF37',
-            letterSpacing: '0.04em',
-            lineHeight: 1,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
           }}
-        >
-          {initials}
-        </span>
+        />
       </motion.div>
 
       {/* Name */}
