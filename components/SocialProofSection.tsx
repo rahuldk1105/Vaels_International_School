@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
 import Image, { StaticImageData } from 'next/image';
 
@@ -40,105 +40,6 @@ function AnimatedQuote({ text, inView }: { text: string; inView: boolean }) {
         </motion.span>
       ))}
     </span>
-  );
-}
-
-// ─── Supporting Card ──────────────────────────────────────────────────────────
-
-interface TestimonialCardProps {
-  name: string;
-  title: string;
-  quote: string;
-  image: string | StaticImageData;
-  inView: boolean;
-  index: number;
-}
-
-function TestimonialCard({ name, title, quote, image, inView, index }: TestimonialCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
-      animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.5 + index * 0.14 }}
-      style={{
-        background: 'rgba(248, 246, 242, 0.055)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid rgba(212, 175, 55, 0.15)',
-        borderTop: '2px solid rgba(212, 175, 55, 0.45)',
-        borderRadius: '20px',
-        padding: 'clamp(24px, 2.5vw, 36px)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '18px',
-      }}
-    >
-      {/* Stars */}
-      <div style={{ display: 'flex', gap: '4px' }}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.3, delay: 0.65 + index * 0.14 + i * 0.06 }}
-            style={{ color: '#D4AF37', fontSize: '14px', lineHeight: 1 }}
-            aria-hidden="true"
-          >
-            ★
-          </motion.span>
-        ))}
-      </div>
-
-      {/* Quote */}
-      <p style={{
-        fontFamily: "'Cormorant Garamond', serif",
-        fontSize: 'clamp(16px, 1.5vw, 20px)',
-        fontStyle: 'italic',
-        fontWeight: 400,
-        color: 'rgba(248, 246, 242, 0.82)',
-        lineHeight: 1.6,
-        margin: 0,
-        flex: 1,
-      }}>
-        "{quote}"
-      </p>
-
-      {/* Attribution */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(248,246,242,0.08)', paddingTop: '18px' }}>
-        <div style={{
-          width: '44px',
-          height: '44px',
-          borderRadius: '50%',
-          overflow: 'hidden',
-          border: '1.5px solid rgba(212, 175, 55, 0.4)',
-          flexShrink: 0,
-          position: 'relative',
-          background: 'rgba(212, 175, 55, 0.1)',
-        }}>
-          <Image src={image} alt={name} fill className="object-cover" sizes="44px" />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          <span style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '13px',
-            fontWeight: 600,
-            color: '#D4AF37',
-            letterSpacing: '0.04em',
-          }}>
-            {name}
-          </span>
-          <span style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '11px',
-            fontWeight: 300,
-            color: 'rgba(248, 246, 242, 0.45)',
-            letterSpacing: '0.06em',
-          }}>
-            {title}
-          </span>
-        </div>
-      </div>
-    </motion.div>
   );
 }
 
@@ -206,10 +107,30 @@ const SUPPORTING = [
 
 export default function SocialProofSection() {
   const spotlightRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const spotlightInView = useInView(spotlightRef, { once: true, margin: '-8% 0px' });
-  const cardsInView = useInView(cardsRef, { once: true, margin: '-5% 0px' });
+  const carouselInView = useInView(carouselRef, { once: true, margin: '-5% 0px' });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % SUPPORTING.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + SUPPORTING.length) % SUPPORTING.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % SUPPORTING.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
 
   return (
     <section
@@ -222,7 +143,6 @@ export default function SocialProofSection() {
         position: 'relative',
       }}
     >
-      {/* Background radial glow */}
       <div style={{
         position: 'absolute',
         top: '20%',
@@ -234,7 +154,6 @@ export default function SocialProofSection() {
         pointerEvents: 'none',
       }} aria-hidden="true" />
 
-      {/* Background noise */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -247,7 +166,6 @@ export default function SocialProofSection() {
 
       <div className="mx-auto" style={{ maxWidth: '1280px', padding: '0 clamp(24px, 5vw, 80px)' }}>
 
-        {/* Spotlight Testimonial */}
         <motion.div
           ref={spotlightRef}
           variants={spotlightVariants}
@@ -255,7 +173,6 @@ export default function SocialProofSection() {
           animate={spotlightInView ? 'visible' : 'hidden'}
           style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto', marginBottom: 'clamp(48px, 5vw, 64px)' }}
         >
-          {/* Section eyebrow */}
           <motion.div
             variants={spotlightItemVariants}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '32px' }}
@@ -274,7 +191,6 @@ export default function SocialProofSection() {
             <div style={{ width: '32px', height: '1px', background: 'linear-gradient(90deg, rgba(212,175,55,0.6), transparent)' }} />
           </motion.div>
 
-          {/* Decorative quote mark */}
           <motion.div
             variants={spotlightItemVariants}
             style={{
@@ -290,7 +206,6 @@ export default function SocialProofSection() {
             "
           </motion.div>
 
-          {/* Animated Quote */}
           <motion.p
             variants={spotlightItemVariants}
             style={{
@@ -306,7 +221,6 @@ export default function SocialProofSection() {
             />
           </motion.p>
 
-          {/* Kamal Haasan Attribution */}
           <motion.div
             variants={spotlightItemVariants}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}
@@ -352,7 +266,6 @@ export default function SocialProofSection() {
           </motion.div>
         </motion.div>
 
-        {/* Divider */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={spotlightInView ? { scaleX: 1, opacity: 1 } : {}}
@@ -366,24 +279,187 @@ export default function SocialProofSection() {
           aria-hidden="true"
         />
 
-        {/* Supporting Cards */}
-        <div
-          ref={cardsRef}
+        <motion.div
+          ref={carouselRef}
+          initial={{ opacity: 0 }}
+          animate={carouselInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-            gap: 'clamp(24px, 2vw, 32px)',
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: 'clamp(350px, 45vw, 450px)',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          {SUPPORTING.map((t, i) => (
-            <TestimonialCard
-              key={t.name}
-              name={t.name}
-              title={t.title}
-              quote={t.quote}
-              image={t.image}
-              inView={cardsInView}
-              index={i}
+          <button
+            onClick={goToPrev}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              left: 'clamp(8px, 2vw, 24px)',
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              border: '1.5px solid rgba(212, 175, 55, 0.3)',
+              background: 'rgba(248, 246, 242, 0.1)',
+              backdropFilter: 'blur(8px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 10,
+              transition: 'all 0.3s ease',
+              color: '#D4AF37',
+              fontSize: '20px',
+            }}
+            aria-label="Previous"
+          >
+            ←
+          </button>
+
+          <button
+            onClick={goToNext}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              right: 'clamp(8px, 2vw, 24px)',
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              border: '1.5px solid rgba(212, 175, 55, 0.3)',
+              background: 'rgba(248, 246, 242, 0.1)',
+              backdropFilter: 'blur(8px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 10,
+              transition: 'all 0.3s ease',
+              color: '#D4AF37',
+              fontSize: '20px',
+            }}
+            aria-label="Next"
+          >
+            →
+          </button>
+
+          <div style={{
+            display: 'flex',
+            transition: 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
+            transform: `translateX(-${currentIndex * 100}%)`,
+            width: '100%',
+          }}>
+            {SUPPORTING.map((t, i) => (
+              <div
+                key={t.name}
+                style={{
+                  width: '100%',
+                  flexShrink: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  maxWidth: '840px',
+                  margin: '0 auto',
+                  padding: '0 clamp(24px, 4vw, 64px)',
+                }}
+              >
+                <div style={{ display: 'flex', gap: '6px', marginBottom: '24px' }}>
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <span
+                      key={j}
+                      style={{ color: '#D4AF37', fontSize: '18px', lineHeight: 1 }}
+                      aria-hidden="true"
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: 'clamp(20px, 3vw, 36px)',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                  color: 'rgba(248, 246, 242, 0.88)',
+                  lineHeight: 1.5,
+                  margin: '0 0 32px 0',
+                }}>
+                  "{t.quote}"
+                </p>
+
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '16px',
+                  marginTop: '24px',
+                }}>
+                  <div style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    border: '2px solid rgba(212, 175, 55, 0.5)',
+                    position: 'relative',
+                    flexShrink: 0,
+                    background: 'rgba(212, 175, 55, 0.08)',
+                  }}>
+                    <Image src={t.image} alt={t.name} fill className="object-cover" sizes="56px" />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#D4AF37',
+                      letterSpacing: '0.03em',
+                    }}>
+                      {t.name}
+                    </span>
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: '13px',
+                      fontWeight: 300,
+                      color: 'rgba(248, 246, 242, 0.5)',
+                      letterSpacing: '0.05em',
+                    }}>
+                      {t.title}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '8px',
+          marginTop: '32px',
+        }}>
+          {SUPPORTING.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goToSlide(i)}
+              style={{
+                width: currentIndex === i ? '24px' : '8px',
+                height: '8px',
+                borderRadius: '4px',
+                background: currentIndex === i 
+                  ? 'linear-gradient(90deg, #C9A227, #D4AF37)' 
+                  : 'rgba(248, 246, 242, 0.2)',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={currentIndex === i}
             />
           ))}
         </div>
