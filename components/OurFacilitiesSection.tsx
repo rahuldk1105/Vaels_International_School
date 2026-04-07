@@ -10,7 +10,7 @@ const FACILITIES = [
   {
     id: 'classrooms',
     label: 'AC Classrooms',
-    image: '/images/facilities/ac-classrooms.jpg',
+    image: 'https://images.pexels.com/photos/8423433/pexels-photo-8423433.jpeg?auto=compress&cs=tinysrgb&w=1200&q=85',
     alt: 'AC Classrooms — Vaels International School',
     gridArea: 'classrooms',
     focalPos: 'center 30%',
@@ -18,7 +18,7 @@ const FACILITIES = [
   {
     id: 'labs',
     label: 'Laboratories',
-    image: '/images/facilities/laboratories.jpg',
+    image: 'https://images.pexels.com/photos/6129872/pexels-photo-6129872.jpeg?auto=compress&cs=tinysrgb&w=1200&q=85',
     alt: 'Laboratories — Vaels International School',
     gridArea: 'labs',
     focalPos: 'center 40%',
@@ -26,7 +26,7 @@ const FACILITIES = [
   {
     id: 'boards',
     label: 'Interactive Boards',
-    image: '/images/facilities/interactive-boards.jpg',
+    image: 'https://images.unsplash.com/photo-1681949098572-0004d05d6363?w=1200&q=85&auto=format&fit=crop',
     alt: 'Interactive Boards — Vaels International School',
     gridArea: 'boards',
     focalPos: 'center 35%',
@@ -34,7 +34,7 @@ const FACILITIES = [
   {
     id: 'auditorium',
     label: 'AC Auditorium',
-    image: '/images/facilities/ac-auditorium.jpg',
+    image: 'https://images.unsplash.com/photo-1643199032520-99230e970fb9?w=1200&q=85&auto=format&fit=crop',
     alt: 'AC Auditorium — Vaels International School',
     gridArea: 'auditorium',
     focalPos: 'center 25%',
@@ -42,7 +42,7 @@ const FACILITIES = [
   {
     id: 'library',
     label: 'Library',
-    image: '/images/facilities/library.jpg',
+    image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1200&q=85&auto=format&fit=crop',
     alt: 'Library — Vaels International School',
     gridArea: 'library',
     focalPos: 'center 30%',
@@ -50,7 +50,7 @@ const FACILITIES = [
   {
     id: 'pool',
     label: 'Swimming Pool',
-    image: '/images/facilities/swimming-pool.jpg',
+    image: 'https://images.unsplash.com/photo-1558617320-e695f0d420de?w=1200&q=85&auto=format&fit=crop',
     alt: 'Swimming Pool — Vaels International School',
     gridArea: 'pool',
     focalPos: 'center 40%',
@@ -58,7 +58,7 @@ const FACILITIES = [
   {
     id: 'cinema',
     label: 'Pride Cinema',
-    image: '/images/facilities/pride-cinema.jpg',
+    image: 'https://images.unsplash.com/photo-1583343674297-d1bad99b5b47?w=1200&q=85&auto=format&fit=crop',
     alt: 'Pride Cinema — Vaels International School',
     gridArea: 'cinema',
     focalPos: 'center 35%',
