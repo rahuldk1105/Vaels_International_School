@@ -563,10 +563,10 @@ export default function HeroSection() {
           }}
         >
           <div
-            className="mx-auto w-full px-6 lg:px-12 flex justify-end"
+            className="mx-auto w-full px-6 lg:px-12 flex justify-center"
             style={{ maxWidth: '1440px' }}
           >
-            <div style={{ maxWidth: '760px', textAlign: 'right' }}>
+            <div style={{ maxWidth: '760px', textAlign: 'center' }}>
 
               {/* Eyebrow */}
               <motion.p
@@ -582,7 +582,7 @@ export default function HeroSection() {
                   marginBottom: '22px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'flex-end',
+                  justifyContent: 'center',
                   gap: '10px',
                 }}
               >
@@ -696,7 +696,7 @@ export default function HeroSection() {
                 variants={ctaContainerVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex flex-wrap items-center justify-end hero-cta-row"
+                className="flex flex-wrap items-center justify-center hero-cta-row"
                 style={{ gap: '14px', marginTop: '32px' }}
               >
                 <PrimaryButton href="#admissions">Enquire for Admission</PrimaryButton>
