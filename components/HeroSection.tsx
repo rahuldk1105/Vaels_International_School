@@ -554,19 +554,19 @@ export default function HeroSection() {
         className="absolute inset-0 flex flex-col pointer-events-none"
         aria-hidden="false"
       >
-        {/* Centered container with top padding for vertical balance */}
+        {/* Left-aligned container with top padding for vertical balance */}
         <div
-          className="pointer-events-auto w-full flex flex-col justify-end flex-1"
+          className="pointer-events-auto w-full flex flex-col justify-end flex-1 items-start"
           style={{
             paddingTop: 'clamp(80px, 12vh, 140px)',
             paddingBottom: 'clamp(72px, 11vh, 130px)',
           }}
         >
           <div
-            className="mx-auto w-full px-6 lg:px-12 flex justify-center"
+            className="w-full px-6 lg:px-12 flex items-start"
             style={{ maxWidth: '1440px' }}
           >
-            <div style={{ maxWidth: '760px', textAlign: 'center' }}>
+            <div className="max-w-3xl flex flex-col items-start" style={{ textAlign: 'left' }}>
 
               {/* Eyebrow */}
               <motion.p
@@ -582,8 +582,8 @@ export default function HeroSection() {
                   marginBottom: '22px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
                   gap: '10px',
+                  textAlign: 'left',
                 }}
               >
                 <motion.span
@@ -686,10 +686,10 @@ export default function HeroSection() {
                   lineHeight: 1.6,
                   textShadow: '0 1px 8px rgba(15, 37, 72, 0.5)',
                   maxWidth: '420px',
-                  textAlign: 'center',
+                  textAlign: 'left',
                 }}
               >
-                Three curricula. One purpose. Yours.
+                Three curriculum. One purpose. Yours.
               </motion.p>
 
               {/* CTA Row — inline with text block */}
@@ -697,8 +697,8 @@ export default function HeroSection() {
                 variants={ctaContainerVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex flex-wrap items-center justify-center hero-cta-row"
-                style={{ gap: '14px', marginTop: '32px' }}
+                className="flex flex-wrap items-center hero-cta-row"
+                style={{ gap: '14px', marginTop: '32px', justifyContent: 'flex-start' }}
               >
                 <PrimaryButton href="#admissions">Enquire for Admission</PrimaryButton>
                 <SecondaryButton href="#admissions">Book a Campus Visit</SecondaryButton>
