@@ -72,16 +72,16 @@ export default function FooterSection() {
     >
       {/* Main footer body */}
       <div
-        className="mx-auto w-full px-6 lg:px-12"
+        className="mx-auto w-full px-6 md:px-10 lg:px-12"
         style={{
-          maxWidth: '1440px',
+          maxWidth: '1280px',
           paddingTop: 'clamp(48px, 6vw, 64px)',
           paddingBottom: 'clamp(48px, 6vw, 64px)',
           textAlign: 'left',
         }}
       >
         {/* Logo Section */}
-        <div className="mx-auto w-full max-w-2xl" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '16px', marginBottom: '32px' }}>
+        <div className="w-full" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '16px', marginBottom: '32px' }}>
           <Image
             src="/images/vels-logo.webp"
             alt="Vaels International School Logo"
@@ -110,7 +110,7 @@ export default function FooterSection() {
           margin: '32px 0',
         }} />
 
-        <div className="grid gap-8" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+        <div className="w-full grid gap-8" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
           {/* ── Col 1: Pre-School ── */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
             <ColHeading>Pre-School</ColHeading>
@@ -280,9 +280,9 @@ export default function FooterSection() {
         borderTop: '1px solid rgba(248, 246, 242, 0.1)',
       }}>
         <div
-          className="mx-auto w-full px-6 lg:px-12"
+          className="mx-auto w-full px-6 md:px-10 lg:px-12"
           style={{
-            maxWidth: '1440px',
+            maxWidth: '1280px',
             paddingTop: '16px',
             paddingBottom: '16px',
             textAlign: 'center',
