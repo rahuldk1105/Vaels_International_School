@@ -313,7 +313,7 @@ function CampusCard({ campus, index }: CampusCardProps) {
             cursor: 'pointer',
           }}
         >
-          Explore More
+          View us on yt
           <span style={{ fontSize: '16px' }}>→</span>
         </motion.a>
       </motion.div>
