@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -75,32 +76,30 @@ export default function FooterSection() {
         style={{
           maxWidth: '1280px',
           padding: 'clamp(48px, 6vw, 64px) clamp(24px, 5vw, 80px)',
+          textAlign: 'center',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'start', gap: '48px' }}>
-          {/* Logo Section */}
-          <div style={{ flex: '0 0 auto', marginBottom: '32px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <svg width="80" height="80" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M18 2L21.5 9.5L30 10.5L24 16.5L25.5 25L18 21L10.5 25L12 16.5L6 10.5L14.5 9.5L18 2Z" fill="#D4AF37" fillOpacity="0.92" />
-                <path d="M18 6.5L20.8 12L27 12.7L22.5 17L23.7 23.2L18 20.2L12.3 23.2L13.5 17L9 12.7L15.2 12L18 6.5Z" fill="#F5E9B8" fillOpacity="0.55" />
-                <rect x="15.5" y="26.5" width="5" height="7" rx="1" fill="#D4AF37" fillOpacity="0.75" />
-                <rect x="13" y="32" width="10" height="1.5" rx="0.75" fill="#D4AF37" fillOpacity="0.9" />
-              </svg>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '14px',
-                fontWeight: 300,
-                color: 'rgba(248, 246, 242, 0.8)',
-                lineHeight: 1.6,
-                margin: 0,
-                maxWidth: '300px',
-                letterSpacing: '0.01em',
-              }}>
-                Vaels International School is dedicated to providing a nurturing and stimulating environment for children that fosters joy, curiosity, and love for learning.
-              </p>
-            </div>
-          </div>
+        {/* Logo Section */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+          <Image
+            src="/images/vels-logo.webp"
+            alt="Vaels International School Logo"
+            width={100}
+            height={100}
+            style={{ objectFit: 'contain' }}
+          />
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '14px',
+            fontWeight: 300,
+            color: 'rgba(248, 246, 242, 0.8)',
+            lineHeight: 1.6,
+            margin: 0,
+            maxWidth: '420px',
+            letterSpacing: '0.01em',
+          }}>
+            Vaels International School is dedicated to providing a nurturing and stimulating environment for children that fosters joy, curiosity, and love for learning.
+          </p>
         </div>
 
         {/* Divider */}
@@ -112,47 +111,38 @@ export default function FooterSection() {
 
         <div className="grid gap-8" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
           {/* ── Col 1: Pre-School ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
             <ColHeading>Pre-School</ColHeading>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                <span style={{ color: 'rgba(248, 246, 242, 0.8)', fontSize: '14px', lineHeight: 1.6, flexShrink: 0 }}>📍</span>
-                <span style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: '14px',
-                  color: 'rgba(248, 246, 242, 0.8)',
-                  lineHeight: 1.6,
-                  letterSpacing: '0.01em',
-                }}>
-                  480, Third Main Road (South), Sri Kapaleeswarar Nagar, East Coast Road, Neelankarai, Chennai, Tamil Nadu - 600115
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <span style={{ color: 'rgba(248, 246, 242, 0.8)', fontSize: '14px', flexShrink: 0 }}>📞</span>
-                <a href="tel:+919790937620" style={{
-                  ...linkBase,
-                  fontSize: '14px',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
-                  +91-9790937620 / +91-9500057634
-                </a>
-              </div>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <span style={{ color: 'rgba(248, 246, 242, 0.8)', fontSize: '14px', flexShrink: 0 }}>✉</span>
-                <a href="mailto:inquiry@vaelsinternationalschool.com" style={{
-                  ...linkBase,
-                  fontSize: '14px',
-                  wordBreak: 'break-all',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
-                  inquiry@vaelsinternationalschool.com
-                </a>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '14px',
+                color: 'rgba(248, 246, 242, 0.8)',
+                lineHeight: 1.6,
+                letterSpacing: '0.01em',
+              }}>
+                480, Third Main Road (South), Sri Kapaleeswarar Nagar, East Coast Road, Neelankarai, Chennai, Tamil Nadu - 600115
+              </span>
+              <a href="tel:+919790937620" style={{
+                ...linkBase,
+                fontSize: '14px',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                +91-9790937620 / +91-9500057634
+              </a>
+              <a href="mailto:inquiry@vaelsinternationalschool.com" style={{
+                ...linkBase,
+                fontSize: '14px',
+                wordBreak: 'break-all',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                inquiry@vaelsinternationalschool.com
+              </a>
             </div>
 
-            <div style={{ marginTop: '12px' }}>
+            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '14px',
@@ -162,7 +152,7 @@ export default function FooterSection() {
               }}>
                 Follow Us
               </p>
-              <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
                 {['facebook', 'instagram', 'youtube'].map((social) => (
                   <a
                     key={social}
@@ -197,47 +187,38 @@ export default function FooterSection() {
           </div>
 
           {/* ── Col 2: High-School ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderLeft: '0', paddingLeft: '0' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
             <ColHeading>High-School</ColHeading>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                <span style={{ color: 'rgba(248, 246, 242, 0.8)', fontSize: '14px', lineHeight: 1.6, flexShrink: 0 }}>📍</span>
-                <span style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: '14px',
-                  color: 'rgba(248, 246, 242, 0.8)',
-                  lineHeight: 1.6,
-                  letterSpacing: '0.01em',
-                }}>
-                  Valmiki Street, Injambakkam, East Coast Road, Chennai, Tamil Nadu - 600115
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <span style={{ color: 'rgba(248, 246, 242, 0.8)', fontSize: '14px', flexShrink: 0 }}>📞</span>
-                <a href="tel:9600039910" style={{
-                  ...linkBase,
-                  fontSize: '14px',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
-                  96000 39910
-                </a>
-              </div>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <span style={{ color: 'rgba(248, 246, 242, 0.8)', fontSize: '14px', flexShrink: 0 }}>✉</span>
-                <a href="mailto:info@vaelsinternationalschool.com" style={{
-                  ...linkBase,
-                  fontSize: '14px',
-                  wordBreak: 'break-all',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
-                  info@vaelsinternationalschool.com
-                </a>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '14px',
+                color: 'rgba(248, 246, 242, 0.8)',
+                lineHeight: 1.6,
+                letterSpacing: '0.01em',
+              }}>
+                Valmiki Street, Injambakkam, East Coast Road, Chennai, Tamil Nadu - 600115
+              </span>
+              <a href="tel:9600039910" style={{
+                ...linkBase,
+                fontSize: '14px',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                96000 39910
+              </a>
+              <a href="mailto:info@vaelsinternationalschool.com" style={{
+                ...linkBase,
+                fontSize: '14px',
+                wordBreak: 'break-all',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                info@vaelsinternationalschool.com
+              </a>
             </div>
 
-            <div style={{ marginTop: '12px' }}>
+            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '14px',
@@ -247,7 +228,7 @@ export default function FooterSection() {
               }}>
                 Follow Us
               </p>
-              <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
                 {['facebook', 'instagram', 'youtube'].map((social) => (
                   <a
                     key={social}
@@ -282,9 +263,9 @@ export default function FooterSection() {
           </div>
 
           {/* ── Col 3: Useful Link ── */}
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <ColHeading>Useful Link</ColHeading>
-            <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
               {USEFUL_LINKS.map(link => (
                 <FooterLink key={link.label} href={link.href}>{link.label}</FooterLink>
               ))}
