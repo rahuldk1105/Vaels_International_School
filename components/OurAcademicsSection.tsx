@@ -60,7 +60,13 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
   };
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', width: '100%', aspectRatio: '16/10', background: '#f0f0f0' }}>
+    <div style={{ 
+      position: 'relative', 
+      overflow: 'hidden', 
+      width: '100%', 
+      height: '100%',
+      background: '#f0f0f0' 
+    }}>
       {/* Image Track */}
       <div style={{
         display: 'flex',
@@ -202,10 +208,10 @@ function CampusCard({ campus, index }: CampusCardProps) {
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))',
+        alignItems: 'stretch',
         borderRadius: '24px',
         overflow: 'hidden',
         boxShadow: '0 8px 48px rgba(26, 60, 110, 0.1)',
-        minHeight: 'clamp(320px, 38vw, 440px)',
       }}
     >
       {/* Text Panel */}
@@ -213,14 +219,15 @@ function CampusCard({ campus, index }: CampusCardProps) {
         variants={textVariants}
         style={{
           background: campus.bg,
-          padding: 'clamp(40px, 5vw, 72px)',
+          padding: 'clamp(24px, 4vw, 32px)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          gap: '20px',
+          gap: '16px',
           order: textColOrder,
           position: 'relative',
           overflow: 'hidden',
+          height: '100%',
         }}
       >
         {/* Decorative corner accent */}
@@ -316,6 +323,7 @@ function CampusCard({ campus, index }: CampusCardProps) {
           order: imageColOrder,
           position: 'relative',
           overflow: 'hidden',
+          height: '100%',
         }}
       >
         <ImageCarousel images={campus.images} alt={campus.location} />
