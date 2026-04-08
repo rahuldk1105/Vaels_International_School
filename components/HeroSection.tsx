@@ -337,12 +337,20 @@ function SecondaryButton({ href, children }: { href: string; children: React.Rea
   );
 }
 
+// ─── Hero Images ─────────────────────────────────────────────────────────────
+
+const heroImages = [
+  '/images/hero-section/h1.png',
+  '/images/hero-section/h2.png',
+  '/images/hero-section/h3.png',
+  '/images/hero-section/h4.png',
+];
+
 // ─── Main Hero Section ────────────────────────────────────────────────────────
 
 export default function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [heroIndex, setHeroIndex] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
   // ── Scroll-aware hero fade ─────────────────────────────────────────────
@@ -388,13 +396,12 @@ export default function HeroSection() {
   }, [handleMouseMove]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const handleLoaded = () => setVideoLoaded(true);
-    video.addEventListener('loadeddata', handleLoaded);
-    video.play().catch(() => {});
-    return () => video.removeEventListener('loadeddata', handleLoaded);
-  }, []);
+    if (prefersReducedMotion) return;
+    const timer = setInterval(() => {
+      setHeroIndex(prev => (prev + 1) % heroImages.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [prefersReducedMotion]);
 
   return (
     <section
@@ -403,7 +410,7 @@ export default function HeroSection() {
       style={{ height: '100vh', minHeight: '640px', background: '#0F2548' }}
       aria-label="Hero — Vaels International School"
     >
-      {/* ── Background Media (Ken Burns wrapper) ── */}
+      {/* ── Background Images (Ken Burns wrapper) ── */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
@@ -413,32 +420,28 @@ export default function HeroSection() {
           willChange: 'transform',
         }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: videoLoaded ? 1 : 0, transition: 'opacity 1.2s ease' }}
-          aria-hidden="true"
-        >
-          <source src="/videos/campus.mp4" type="video/mp4" />
-        </video>
-
-        <Image
-          src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1920&q=90&auto=format&fit=crop"
-          alt="Vaels International School campus"
-          fill
-          priority
-          quality={92}
-          className="object-cover"
-          style={{
-            opacity: videoLoaded ? 0 : 1,
-            transition: 'opacity 1.2s ease',
-          }}
-        />
+        {heroImages.map((src, i) => (
+          <div
+            key={src}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: i === heroIndex ? 1 : 0,
+              transition: 'opacity 1200ms ease',
+            }}
+            aria-hidden="true"
+          >
+            <Image
+              src={src}
+              alt="Vaels International School campus"
+              fill
+              priority={i === 0}
+              quality={90}
+              className="object-cover"
+              sizes="100vw"
+            />
+          </div>
+        ))}
       </div>
 
       {/* ── Layer 1: Strong top-left Royal Blue directional gradient (readability) ── */}
