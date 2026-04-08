@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import AboutUsSection from '@/components/AboutUsSection';
 import AboutSection from '@/components/AboutSection';
 import OurFacilitiesSection from '@/components/OurFacilitiesSection';
 import WhyVaelsSection from '@/components/WhyVaelsSection';
@@ -26,6 +27,8 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <MarqueeStrip />
+      <div className="section-sep" />
+      <AboutUsSection />
       <div className="section-sep" />
       <AboutSection />
       <div className="section-sep" />

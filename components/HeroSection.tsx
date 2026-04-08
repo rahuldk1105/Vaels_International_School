@@ -438,7 +438,7 @@ export default function HeroSection() {
               fill
               priority={i === 0}
               quality={90}
-              className="object-cover"
+              className="object-cover brightness-[0.45]"
               sizes="100vw"
             />
           </div>
