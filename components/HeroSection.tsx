@@ -344,6 +344,7 @@ const heroImages = [
   '/images/hero-section/h2.png',
   '/images/hero-section/h3.png',
   '/images/hero-section/h4.png',
+  '/images/hero-section/h5.png',
 ];
 
 // ─── Main Hero Section ────────────────────────────────────────────────────────
@@ -562,10 +563,10 @@ export default function HeroSection() {
           }}
         >
           <div
-            className="mx-auto w-full px-6 lg:px-12"
+            className="mx-auto w-full px-6 lg:px-12 flex justify-end"
             style={{ maxWidth: '1440px' }}
           >
-            <div style={{ maxWidth: '760px' }}>
+            <div style={{ maxWidth: '760px', textAlign: 'right' }}>
 
               {/* Eyebrow */}
               <motion.p
@@ -581,6 +582,7 @@ export default function HeroSection() {
                   marginBottom: '22px',
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'flex-end',
                   gap: '10px',
                 }}
               >
@@ -694,7 +696,7 @@ export default function HeroSection() {
                 variants={ctaContainerVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex flex-wrap items-center hero-cta-row"
+                className="flex flex-wrap items-center justify-end hero-cta-row"
                 style={{ gap: '14px', marginTop: '32px' }}
               >
                 <PrimaryButton href="#admissions">Enquire for Admission</PrimaryButton>
