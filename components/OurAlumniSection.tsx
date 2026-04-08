@@ -174,7 +174,7 @@ export default function OurAlumniSection() {
       data-dark-section="true"
       style={{
         background: 'linear-gradient(160deg, #1A3C6E 0%, #0F2548 100%)',
-        padding: 'clamp(80px, 10vw, 140px) 0',
+        padding: 'clamp(48px, 6vw, 64px) 0',
         overflow: 'hidden',
         position: 'relative',
       }}
