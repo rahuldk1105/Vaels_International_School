@@ -177,12 +177,12 @@ export default function SocialProofSection() {
               margin: 0,
             }}
           >
-            What People{' '}
+            What Parents{' '}
             <span style={{ fontStyle: 'italic', color: '#D4AF37' }}>Are Saying</span>
           </motion.h2>
         </motion.div>
 
-        <div style={{ position: 'relative', overflow: 'hidden', paddingTop: 'clamp(32px, 4vw, 48px)', paddingBottom: 'clamp(32px, 4vw, 48px)' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', paddingTop: 'clamp(24px, 3vw, 32px)', paddingBottom: 'clamp(24px, 3vw, 32px)' }}>
           <button
             onClick={goToPrev}
             style={{

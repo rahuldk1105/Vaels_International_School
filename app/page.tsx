@@ -31,11 +31,9 @@ export default function Home() {
       <OurFacilitiesSection />
       <div className="section-sep" />
       <WhyVaelsSection />
-      <div className="section-sep" />
       <AcademicExcellenceSection />
       <div className="section-sep" />
       <OurAcademicsSection />
-      <div className="section-sep" />
       <OurAlumniSection />
       <div className="section-sep" />
       <StudentsLifeSection />
