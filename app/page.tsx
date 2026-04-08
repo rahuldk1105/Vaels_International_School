@@ -9,6 +9,7 @@ import OurAlumniSection from '@/components/OurAlumniSection';
 import StudentsLifeSection from '@/components/StudentsLifeSection';
 import SocialProofSection from '@/components/SocialProofSection';
 import CTASection from '@/components/CTASection';
+import FooterSection from '@/components/FooterSection';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
 import LuxuryCursor from '@/components/LuxuryCursor';
 import PageLoadOverlay from '@/components/PageLoadOverlay';
@@ -39,6 +40,7 @@ export default function Home() {
       <StudentsLifeSection />
       <SocialProofSection />
       <CTASection />
+      <FooterSection />
     </main>
   );
 }
