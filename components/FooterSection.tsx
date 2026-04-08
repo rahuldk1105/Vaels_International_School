@@ -2,17 +2,18 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const USEFUL_LINKS = [
-  { label: 'About',      href: '#about' },
-  { label: 'Admission',  href: '#admissions' },
-  { label: 'Academics',  href: '#programmes' },
-  { label: 'Alumni',     href: '#alumni' },
-  { label: 'Blogs',      href: '#' },
+  { label: 'About', href: '#about' },
+  { label: 'Admission', href: '#admissions' },
+  { label: 'Academics', href: '#programmes' },
+  { label: 'Alumni', href: '#alumni' },
+  { label: 'Blogs', href: '#' },
   { label: 'Newsletter', href: '#' },
-  { label: 'Gallery',    href: '#' },
+  { label: 'Gallery', href: '#' },
   { label: 'Contact Us', href: '#contact' },
 ];
 
@@ -81,7 +82,7 @@ export default function FooterSection() {
         }}
       >
         {/* Logo Section */}
-        <div className="w-full" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '16px', marginBottom: '32px' }}>
+        <div className="w-full" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
           <Image
             src="/images/vels-logo.webp"
             alt="Vaels International School Logo"
@@ -98,6 +99,7 @@ export default function FooterSection() {
             margin: 0,
             maxWidth: '420px',
             letterSpacing: '0.01em',
+            textAlign: 'center',
           }}>
             Vaels International School is dedicated to providing a nurturing and stimulating environment for children that fosters joy, curiosity, and love for learning.
           </p>
@@ -110,9 +112,9 @@ export default function FooterSection() {
           margin: '32px 0',
         }} />
 
-        <div className="w-full grid gap-8" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-[1000px] mx-auto">
           {/* ── Col 1: Pre-School ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start', textAlign: 'left' }}>
             <ColHeading>Pre-School</ColHeading>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}>
               <span style={{
@@ -128,8 +130,8 @@ export default function FooterSection() {
                 ...linkBase,
                 fontSize: '14px',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
                 +91-9790937620 / +91-9500057634
               </a>
               <a href="mailto:inquiry@vaelsinternationalschool.com" style={{
@@ -137,8 +139,8 @@ export default function FooterSection() {
                 fontSize: '14px',
                 wordBreak: 'break-all',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
                 inquiry@vaelsinternationalschool.com
               </a>
             </div>
@@ -178,9 +180,9 @@ export default function FooterSection() {
                       (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)';
                     }}
                   >
-                    {social === 'facebook' && 'f'}
-                    {social === 'instagram' && 'i'}
-                    {social === 'youtube' && 'y'}
+                    {social === 'facebook' && <FaFacebook size={18} />}
+                    {social === 'instagram' && <FaInstagram size={18} />}
+                    {social === 'youtube' && <FaYoutube size={18} />}
                   </a>
                 ))}
               </div>
@@ -188,7 +190,7 @@ export default function FooterSection() {
           </div>
 
           {/* ── Col 2: High-School ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start', textAlign: 'left' }}>
             <ColHeading>High-School</ColHeading>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}>
               <span style={{
@@ -204,8 +206,8 @@ export default function FooterSection() {
                 ...linkBase,
                 fontSize: '14px',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
                 96000 39910
               </a>
               <a href="mailto:info@vaelsinternationalschool.com" style={{
@@ -213,8 +215,8 @@ export default function FooterSection() {
                 fontSize: '14px',
                 wordBreak: 'break-all',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)'; }}>
                 info@vaelsinternationalschool.com
               </a>
             </div>
@@ -254,9 +256,9 @@ export default function FooterSection() {
                       (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(248, 246, 242, 0.8)';
                     }}
                   >
-                    {social === 'facebook' && 'f'}
-                    {social === 'instagram' && 'i'}
-                    {social === 'youtube' && 'y'}
+                    {social === 'facebook' && <FaFacebook size={18} />}
+                    {social === 'instagram' && <FaInstagram size={18} />}
+                    {social === 'youtube' && <FaYoutube size={18} />}
                   </a>
                 ))}
               </div>
