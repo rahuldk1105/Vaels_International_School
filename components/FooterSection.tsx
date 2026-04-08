@@ -76,11 +76,11 @@ export default function FooterSection() {
         style={{
           maxWidth: '1280px',
           padding: 'clamp(48px, 6vw, 64px) clamp(24px, 5vw, 80px)',
-          textAlign: 'center',
+          textAlign: 'left',
         }}
       >
         {/* Logo Section */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '16px', marginBottom: '32px' }}>
           <Image
             src="/images/vels-logo.webp"
             alt="Vaels International School Logo"
@@ -111,9 +111,9 @@ export default function FooterSection() {
 
         <div className="grid gap-8" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
           {/* ── Col 1: Pre-School ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
             <ColHeading>Pre-School</ColHeading>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}>
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '14px',
@@ -142,7 +142,7 @@ export default function FooterSection() {
               </a>
             </div>
 
-            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '14px',
@@ -152,7 +152,7 @@ export default function FooterSection() {
               }}>
                 Follow Us
               </p>
-              <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-start' }}>
                 {['facebook', 'instagram', 'youtube'].map((social) => (
                   <a
                     key={social}
@@ -187,9 +187,9 @@ export default function FooterSection() {
           </div>
 
           {/* ── Col 2: High-School ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
             <ColHeading>High-School</ColHeading>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}>
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '14px',
@@ -218,7 +218,7 @@ export default function FooterSection() {
               </a>
             </div>
 
-            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '14px',
@@ -228,7 +228,7 @@ export default function FooterSection() {
               }}>
                 Follow Us
               </p>
-              <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-start' }}>
                 {['facebook', 'instagram', 'youtube'].map((social) => (
                   <a
                     key={social}
@@ -263,9 +263,9 @@ export default function FooterSection() {
           </div>
 
           {/* ── Col 3: Useful Link ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
             <ColHeading>Useful Link</ColHeading>
-            <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}>
               {USEFUL_LINKS.map(link => (
                 <FooterLink key={link.label} href={link.href}>{link.label}</FooterLink>
               ))}

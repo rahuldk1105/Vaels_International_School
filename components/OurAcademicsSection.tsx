@@ -14,6 +14,7 @@ const CAMPUSES = [
     bg: '#1A3C6E',
     textOnBg: '#F8F6F2',
     imageRight: true,
+    exploreHref: '/academics/neelankarai',
     images: [
       '/images/neelankarai/neelankarai-1.webp',
       '/images/neelankarai/neelankarai-2.webp',
@@ -30,6 +31,7 @@ const CAMPUSES = [
     bg: '#F8F6F2',
     textOnBg: '#1A3C6E',
     imageRight: false,
+    exploreHref: '/academics/injambakkam',
     images: [
       '/images/injambakkam/injambakkam-1.webp',
       '/images/injambakkam/injambakkam-2.webp',
@@ -293,7 +295,7 @@ function CampusCard({ campus, index }: CampusCardProps) {
 
         {/* CTA */}
         <motion.a
-          href="#contact"
+          href={campus.exploreHref}
           whileHover={{ scale: 1.04, x: 4 }}
           whileTap={{ scale: 0.98 }}
           style={{
