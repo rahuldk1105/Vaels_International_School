@@ -1,7 +1,39 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, useInView, Variants } from 'framer-motion';
+
+// ─── Image Arrays ─────────────────────────────────────────────────────────────
+
+const blogImages = [
+  '/images/blog-images/b1.jpeg',
+  '/images/blog-images/b2.webp',
+  '/images/blog-images/b3.jpeg',
+  '/images/blog-images/b4.webp',
+  '/images/blog-images/b5.jpeg',
+  '/images/blog-images/b6.jpeg',
+  '/images/blog-images/b7.webp',
+  '/images/blog-images/b8.jpeg',
+];
+
+const eventImages = [
+  '/images/vaels-events/v1.jpg',
+  '/images/vaels-events/v2.jpg',
+  '/images/vaels-events/v3.jpg',
+  '/images/vaels-events/v4.jpeg',
+  '/images/vaels-events/v5.jpeg',
+  '/images/vaels-events/v6.jpg',
+];
+
+const newsImages = [
+  '/images/vaels-news/v1.webp',
+  '/images/vaels-news/v2.webp',
+  '/images/vaels-news/v3.webp',
+  '/images/vaels-news/v4.webp',
+  '/images/vaels-news/v5.jpeg',
+  '/images/vaels-news/v6.jpg',
+];
 
 // ─── Student Life Card Data ───────────────────────────────────────────────────
 
@@ -10,18 +42,21 @@ const CARDS = [
     id: 'blogs',
     category: 'Blogs',
     headline: 'Vaels International School Neelankarai – Shaping Future',
+    images: blogImages,
   },
   {
     id: 'events',
     category: 'Vaels Events',
     headline: 'Vijayadasami Aksharabhyasam Celebration at Vaels International School – Neelankarai',
+    images: eventImages,
   },
   {
     id: 'news',
     category: 'Vaels News',
     headline: 'Vaels International School Celebrates Outstanding Academic Excellence In CISCE Examinations 2024-2025',
+    images: newsImages,
   },
-] as const;
+];
 
 // ─── Life Card ────────────────────────────────────────────────────────────────
 
@@ -32,6 +67,16 @@ interface LifeCardProps {
 }
 
 function LifeCard({ card, index, inView }: LifeCardProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { images } = card;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % images.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
@@ -50,62 +95,82 @@ function LifeCard({ card, index, inView }: LifeCardProps) {
         height: '100%',
       }}
     >
-      {/* Image Placeholder */}
+      {/* Image Carousel */}
       <div
         style={{
           position: 'relative',
           height: 'clamp(160px, 20vw, 220px)',
-          background: 'linear-gradient(145deg, #DDE8F8 0%, #C8D8F0 100%)',
           flexShrink: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           overflow: 'hidden',
         }}
       >
-        {/* Subtle grid texture */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(26,60,110,0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(26,60,110,0.06) 1px, transparent 1px)
-          `,
-          backgroundSize: '28px 28px',
-        }} aria-hidden="true" />
-        <div style={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
-          opacity: 0.35,
-        }}>
-          <div style={{
-            width: '40px',
-            height: '32px',
-            borderRadius: '6px',
-            border: '2px solid #1A3C6E',
-          }} />
-          <span style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '9px',
-            letterSpacing: '0.18em',
-            color: '#1A3C6E',
-            textTransform: 'uppercase',
-          }}>
-            Image
-          </span>
-        </div>
         {/* Gold top accent */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '3px',
-          background: 'linear-gradient(90deg, #D4AF37, rgba(212, 175, 55, 0.2))',
-        }} aria-hidden="true" />
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '3px',
+            background: 'linear-gradient(90deg, #D4AF37, rgba(212, 175, 55, 0.2))',
+            zIndex: 2,
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Slides */}
+        {images.map((src, i) => (
+          <div
+            key={src}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: i === currentIndex ? 1 : 0,
+              transition: 'opacity 280ms ease',
+            }}
+          >
+            <Image
+              src={src}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              style={{ objectFit: 'cover' }}
+              priority={index === 0 && i === 0}
+            />
+          </div>
+        ))}
+
+        {/* Dot navigation */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '5px',
+            zIndex: 3,
+          }}
+        >
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              aria-label={`Slide ${i + 1}`}
+              style={{
+                width: i === currentIndex ? '16px' : '6px',
+                height: '6px',
+                borderRadius: '3px',
+                background: i === currentIndex ? '#D4AF37' : 'rgba(255,255,255,0.65)',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                transition: 'width 280ms ease, background 280ms ease',
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Card Content */}
