@@ -405,7 +405,7 @@ export default function Navbar() {
           {/* ── Mobile Hamburger (44×44 touch target) ── */}
           <motion.button
             variants={ctaVariants}
-            className="lg:hidden flex flex-col justify-center items-center"
+            className="flex lg:hidden flex-col justify-center items-center"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
@@ -417,10 +417,6 @@ export default function Navbar() {
               width: '44px',
               height: '44px',
               gap: '5px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
               // Slightly larger hit area via padding
               padding: '10px',
               borderRadius: '8px',
@@ -469,7 +465,9 @@ export default function Navbar() {
       </div>
 
       {/* ── Mobile Menu Dropdown ── */}
-      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <div className="lg:hidden">
+        <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      </div>
     </motion.header>
   );
 }
