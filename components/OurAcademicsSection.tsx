@@ -31,7 +31,7 @@ const CAMPUSES = [
     textOnBg: '#1A3C6E',
     imageRight: false,
     images: [
-      '/images/inajambakam-1.webp',
+      '/images/inajambakam - 1.webp',
       '/images/inajambakam-2.webp',
       '/images/inajambakam-3.webp',
       '/images/inajambakam-4.webp',
