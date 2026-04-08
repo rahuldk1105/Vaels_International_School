@@ -686,6 +686,7 @@ export default function HeroSection() {
                   lineHeight: 1.6,
                   textShadow: '0 1px 8px rgba(15, 37, 72, 0.5)',
                   maxWidth: '420px',
+                  textAlign: 'center',
                 }}
               >
                 Three curricula. One purpose. Yours.
