@@ -5,34 +5,41 @@ import { motion, useInView, Variants } from 'framer-motion';
 
 // ─── Alumni Data ──────────────────────────────────────────────────────────────
 
+const alumniImages = [
+  '/images/alumni/shahana-yusuf.webp',
+  '/images/alumni/nikhil.webp',
+  '/images/alumni/sakthi-suresh-kumar.webp',
+  '/images/alumni/vamsidhar-krishnan.webp',
+];
+
 const ALUMNI = [
   {
     id: 'shahana',
     name: 'Shahana Yusuf',
     university: 'UCL',
     country: 'UK',
-    image: '/images/sahana yusuf.webp',
+    image: alumniImages[0],
   },
   {
     id: 'nikhil',
     name: 'Nikhil',
     university: 'University of Real Madrid',
     country: 'Spain',
-    image: '/images/nikil.webp',
+    image: alumniImages[1],
   },
   {
     id: 'sakthi',
     name: 'Sakthi Suresh Kumar',
     university: 'Medical College',
     country: 'Chengalpattu',
-    image: '/images/sakthi suresh kumar.webp',
+    image: alumniImages[2],
   },
   {
     id: 'vamsidhar',
     name: 'Vamsidhar Krishnan',
     university: 'University of Leed',
     country: 'United Kingdom',
-    image: '/images/vamsidhar krishnan.webp',
+    image: alumniImages[3],
   },
 ] as const;
 

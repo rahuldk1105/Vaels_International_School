@@ -1,7 +1,26 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp \"public/images/sahana yusuf.webp\" \"public/images/alumni/shahana-yusuf.webp\")",
+      "Bash(cp \"public/images/nikil.webp\" \"public/images/alumni/nikhil.webp\")",
+      "Bash(cp \"public/images/sakthi suresh kumar.webp\" \"public/images/alumni/sakthi-suresh-kumar.webp\")",
+      "Bash(cp \"public/images/vamsidhar krishnan.webp\" \"public/images/alumni/vamsidhar-krishnan.webp\")",
+      "Bash(cp \"src/assets/A.K. Tareen.webp\" \"public/images/voices/ak-tareen.webp\")",
+      "Bash(cp \"src/assets/GVM.webp\" \"public/images/voices/gvm.webp\")",
+      "Bash(cp \"src/assets/Jiva.webp\" \"public/images/voices/jiva.webp\")",
+      "Bash(cp \"src/assets/Kamal Hasan.webp\" \"public/images/voices/kamal-hasan.webp\")",
+      "Bash(cp \"src/assets/Lea Rushton.webp\" \"public/images/voices/lea-rushton.webp\")",
+      "Bash(cp \"public/images/neelankarai-1.webp\" \"public/images/neelankarai/neelankarai-1.webp\")",
+      "Bash(cp \"public/images/neelankarai-2.webp\" \"public/images/neelankarai/neelankarai-2.webp\")",
+      "Bash(cp \"public/images/neelankarai-3.webp\" \"public/images/neelankarai/neelankarai-3.webp\")",
+      "Bash(cp \"public/images/neelanakarai-4.webp\" \"public/images/neelankarai/neelankarai-4.webp\")",
+      "Bash(cp \"public/images/neelankarai-5.webp\" \"public/images/neelankarai/neelankarai-5.webp\")",
+      "Bash(rm \"public/images/sahana yusuf.webp\" \"public/images/nikil.webp\" \"public/images/sakthi suresh kumar.webp\" \"public/images/vamsidhar krishnan.webp\")",
+      "Bash(rm \"public/images/neelankarai-1.webp\" \"public/images/neelankarai-2.webp\" \"public/images/neelankarai-3.webp\" \"public/images/neelanakarai-4.webp\" \"public/images/neelankarai-5.webp\")",
+      "Bash(rm \"public/images/inajambakam - 1.webp\" \"public/images/inajambakam -2.webp\" \"public/images/inajambakam -3.webp\" \"public/images/inajambakam -4.webp\" \"public/images/inajambakam -5.webp\" \"public/images/inajambakam -6.webp\")",
+      "Bash(rm \"src/assets/A.K. Tareen.webp\" \"src/assets/GVM.webp\" \"src/assets/Jiva.webp\" \"src/assets/Kamal Hasan.webp\" \"src/assets/Lea Rushton.webp\" \"src/assets/Radhikaa.webp\" \"src/assets/Srikanth.webp\" \"src/assets/Yoshinori.webp\")"
     ]
   }
 }
