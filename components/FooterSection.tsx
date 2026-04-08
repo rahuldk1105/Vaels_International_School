@@ -72,9 +72,9 @@ export default function FooterSection() {
     >
       {/* Main footer body */}
       <div
-        className="mx-auto w-full px-6 md:px-10 lg:px-16"
+        className="mx-auto w-full px-6 lg:px-12"
         style={{
-          maxWidth: '1280px',
+          maxWidth: '1440px',
           paddingTop: 'clamp(48px, 6vw, 64px)',
           paddingBottom: 'clamp(48px, 6vw, 64px)',
           textAlign: 'left',
@@ -280,9 +280,9 @@ export default function FooterSection() {
         borderTop: '1px solid rgba(248, 246, 242, 0.1)',
       }}>
         <div
-          className="mx-auto w-full px-6 md:px-10 lg:px-16"
+          className="mx-auto w-full px-6 lg:px-12"
           style={{
-            maxWidth: '1280px',
+            maxWidth: '1440px',
             paddingTop: '16px',
             paddingBottom: '16px',
             textAlign: 'center',
